@@ -13,7 +13,8 @@
                   <Image url="@../../../Images/Nlogia%20Bank%20Logo.png" />
                </image>
             </ImageView>
-            <Button fx:id="ID_OpenSys" layoutX="152.0" layoutY="419.0" mnemonicParsing="false" stylesheets="@../../../css/bcnStyle.css" text="Abrir Sistema" />
+            <ProgressBar fx:id="ID_Progress" disable="true" layoutX="9.0" layoutY="517.0" prefHeight="18.0" prefWidth="532.0" progress="0.0" stylesheets="@../../../css/bcnStyle.css" />
+            <Label fx:id="progressLabel" layoutX="14.0" layoutY="487.0" stylesheets="@../../../css/bcnStyle.css" text="Load modules..." />
          </children>
       </Pane>
    </children>

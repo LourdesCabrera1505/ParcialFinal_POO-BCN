@@ -1,0 +1,91 @@
+package org.example.bcn.Controller;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+
+import java.io.IOException;
+
+public class PreloaderProgress {
+        private final ProgressBar progressBar;
+        private final Label progressLabel;
+        private final String[] modules;
+
+        private final Stage primaryStage;
+
+
+        public PreloaderProgress(ProgressBar progressBar, Label progressLabel, Stage primaryStage) {
+            this.progressBar = progressBar;
+            this.progressLabel = progressLabel;
+            this.primaryStage= primaryStage;
+            this.modules = new String[] {
+                    "Module 1", "Module 2", "Module 3",
+                    "Module 4", "Module 5", "Module 6",
+                    "Module 7", "Module 8", "Module 9",
+                    "Module 10"
+            };
+        }
+
+        /**
+         *  Este método inicia la animación de la barra de progreso y el texto de carga
+         *  se crea una linea de tiempo con multiples fotogramas clave para animar la barra de progreso
+         *  se cambia el estilo de la barra de progreso y actualiza  el texto de carga
+         * */
+
+        public void start () {
+            Timeline timeline = new Timeline(); // Se genera una nueva linea de tiempo
+            // se recorre cada modulp
+            for (int i = 0; i < modules.length; i++) {
+                final double progress = (i + 1) / (double) modules.length;// se calcula el progreso para el modulo actual
+                final String module = modules[i]; // se obtiene el nombre del modulo actual  (para el texto de carga)
+                KeyFrame kfProgress = new KeyFrame(Duration.seconds(i * 0.9), // KeyFrame para cambiar el progreso de la barra de progreso en el tiempo especificado (0.9 segundos)  y
+                        new KeyValue(progressBar.progressProperty(), progress)); // actualizar el progreso en la barra de progreso
+
+                // KeyFrame para cambiar el estilo de la barra de progreso
+                KeyFrame kfStyle = new KeyFrame(Duration.seconds(i * 0.5),
+                        new KeyValue(progressBar.styleProperty(), "-fx-accent: derive(red, " + (i % 2 == 0 ? "100%" : "-100%") + ");"));
+
+                //key frame para cambiar el texto de carga
+                KeyFrame kfLabel = new KeyFrame(Duration.seconds(i * 0.9),
+                        new KeyValue(progressLabel.textProperty(), " Loading " + module + "..."));
+
+
+                timeline.getKeyFrames().addAll(kfProgress,kfStyle, kfLabel); //añade los fotogramas a la linea de tiempo
+            }
+
+            // Establece una acción a realizar cuando la línea de tiempo finalice
+            timeline.setOnFinished(e -> {
+                progressLabel.setText("Finished loading");
+                Platform.runLater(this::HomeFXML);
+
+            });
+            // Establece el número de repetincion que tendra la barra de progreso
+            timeline.setCycleCount(1);
+            // Establece la línea de tiempo para revertir la dirección después de cada ciclo
+            timeline.setAutoReverse(true);
+            // Inicia la animación de la línea de tiempo de la barra de progreso y el texto de carga
+            timeline.play();
+
+         }
+
+         private  void HomeFXML () {
+             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/bcn/Home.fxml"));
+             try {
+                 Parent root = loader.load();
+                 Scene scene = new Scene(root);
+                 primaryStage.setScene(scene);
+                 primaryStage.show(); // muestra la nueva ventana con la interfaz gráfica de la Home.fxml  en la pantalla principal
+
+             }catch (IOException ex) {
+                 ex.printStackTrace();
+             }
+         }
+}

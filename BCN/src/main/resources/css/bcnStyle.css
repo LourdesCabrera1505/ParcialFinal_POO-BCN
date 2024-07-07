@@ -2,18 +2,30 @@
     -fx-background-color: black;
 }
 
-#ID_OpenSys {
-    -fx-background-color: #3F3F40;
-    -fx-text-fill: white;
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-    -fx-text-alignment: center;
-    -fx-font-family: "Baskerville Old Face" , "Britannic Bold";
-    -fx-background-radius: 10px;
-    -fx-pref-width: 250px;
-    -fx-pref-height: 35px;
+#ID_ContainerMain {
+    -fx-background-color: #D5D6DC;
 }
 
-#ID_OpenSys:hover {
-    -fx-background-color: #585859;
+#ID_Progress {
+    -fx-background-color:#434343;
+    -fx-padding: 0;
+    -fx-background-insets: 0;
+    -fx-border-width: 0;
+}
+
+
+.progress-bar .track {
+    -fx-background-color: #d3d3d3;
+}
+
+.progress-bar .bar {
+    -fx-background-color: linear-gradient(to right, #434343, #F2D022);
+}
+
+#progressLabel {
+    -fx-text-fill: white;
+    -fx-font-family: "Baskerville Old Face", "Britannic Bold";
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
 }
