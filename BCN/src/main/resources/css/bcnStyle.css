@@ -1,0 +1,19 @@
+#ID_ContainerBOX {
+    -fx-background-color: black;
+}
+
+#ID_OpenSys {
+    -fx-background-color: #3F3F40;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+    -fx-font-family: "Baskerville Old Face" , "Britannic Bold";
+    -fx-background-radius: 10px;
+    -fx-pref-width: 250px;
+    -fx-pref-height: 35px;
+}
+
+#ID_OpenSys:hover {
+    -fx-background-color: #585859;
+}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:id="ID_Container" alignment="CENTER" prefHeight="550.0" prefWidth="550.0" style="-fx-background-color: 0·00000;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.bcn.Controller.BCN_Controller">
+   <children>
+      <Pane fx:id="ID_ContainerBOX" prefHeight="557.0" prefWidth="550.0" stylesheets="@../../../css/bcnStyle.css">
+         <children>
+            <ImageView fitHeight="423.0" fitWidth="440.0" layoutX="66.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../Images/Nlogia%20Bank%20Logo.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="ID_OpenSys" layoutX="152.0" layoutY="419.0" mnemonicParsing="false" stylesheets="@../../../css/bcnStyle.css" text="Abrir Sistema" />
+         </children>
+      </Pane>
+   </children>
+</VBox>

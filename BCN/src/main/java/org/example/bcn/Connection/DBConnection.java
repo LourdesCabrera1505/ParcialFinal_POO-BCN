@@ -1,4 +1,4 @@
-package Connection;
+package org.example.bcn.Connection;
 import java.sql.*;
 public class DBConnection {
 
