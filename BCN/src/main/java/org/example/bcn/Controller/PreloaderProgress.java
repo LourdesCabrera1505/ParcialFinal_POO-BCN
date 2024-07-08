@@ -29,8 +29,7 @@ public class PreloaderProgress {
             this.modules = new String[] {
                     "Module 1", "Module 2", "Module 3",
                     "Module 4", "Module 5", "Module 6",
-                    "Module 7", "Module 8", "Module 9",
-                    "Module 10"
+                    "Module 7",
             };
         }
 
@@ -76,12 +75,15 @@ public class PreloaderProgress {
 
          }
 
-         private  void HomeFXML () {
-             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/bcn/Home.fxml"));
+         private  void HomeFXML ()  {
              try {
+                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/bcn/Home.fxml"));
                  Parent root = loader.load();
                  Scene scene = new Scene(root);
                  primaryStage.setScene(scene);
+                 primaryStage.centerOnScreen();
+                 String css = getClass().getResource("/css/bcnStyle.css").toExternalForm();
+                 scene.getStylesheets().add(css);
                  primaryStage.show(); // muestra la nueva ventana con la interfaz gráfica de la Home.fxml  en la pantalla principal
 
              }catch (IOException ex) {

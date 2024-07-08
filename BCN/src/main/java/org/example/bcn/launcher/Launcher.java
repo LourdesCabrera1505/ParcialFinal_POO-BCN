@@ -20,6 +20,7 @@ public class Launcher extends Application {
 
 
     @Override
+
     public void start(Stage primaryStage) throws Exception {
         primaryStage.initStyle(StageStyle.UNDECORATED); // se declara un estilo undercorate para quitar los bordes de la ventana de la aplicación
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/bcn/initPreloader.fxml")); // ruta de acceso donde se encuentra el form
@@ -28,7 +29,7 @@ public class Launcher extends Application {
         primaryStage.setScene(new Scene(root, 550, 550));
         primaryStage.show();
 
-        // Crea  una  nueva instancia de  PreloaderProgress  e inicia la animación
+        // Crea  una  nueva instancia de  PreloaderProgress e inicia la animacion
         PreloaderProgress animator = new PreloaderProgress(controller.getID_Progress(), controller.getProgressLabel(), primaryStage);
         animator.start();
 

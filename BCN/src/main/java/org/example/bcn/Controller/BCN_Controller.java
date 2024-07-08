@@ -1,11 +1,18 @@
 package org.example.bcn.Controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
-public class BCN_Controller {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class BCN_Controller implements Initializable {
 
     @FXML
     private ProgressBar ID_Progress; // Declaración privada de un progress bar denominado ID_Progress . se utiliza para la indentificación del componente a utilizar
@@ -14,7 +21,10 @@ public class BCN_Controller {
     private Label progressLabel;
 
     @FXML
-    private Pane ID_ContainerBOX;
+    private Button minimizeButton;
+
+    @FXML
+    private Button CloseButton;
 
     public ProgressBar getID_Progress() {
         return ID_Progress;
@@ -24,7 +34,21 @@ public class BCN_Controller {
         return progressLabel;
     }
 
-    public Pane getID_ContainerBOX() {
-        return ID_ContainerBOX;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+    }
+
+    @FXML
+    private void HandleMinimizeButton (ActionEvent event) {
+        Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+        stage.setIconified(true);
+    }
+
+    @FXML
+    private void HandleCloseButton (ActionEvent event) {
+        Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+        stage.close();
     }
 }
