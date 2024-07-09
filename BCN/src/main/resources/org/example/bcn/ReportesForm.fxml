@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="523.0" prefWidth="776.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.bcn.Controller.ReportesForm">
+<AnchorPane prefHeight="523.0" prefWidth="814.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.bcn.Controller.ReportesForm">
    <children>
-      <Button fx:id="minimizeButton" layoutX="746.0" layoutY="-1.0" mnemonicParsing="false" onAction="#HandleMinimizeButton" prefHeight="31.0" prefWidth="30.0" stylesheets="@../../../css/bcnStyle.css">
+      <Button fx:id="minimizeButton" layoutX="761.0" layoutY="1.0" mnemonicParsing="false" onAction="#HandleMinimizeButton" prefHeight="31.0" prefWidth="30.0" stylesheets="@../../../css/bcnStyle.css">
          <graphic>
             <ImageView fitHeight="33.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -17,7 +18,7 @@
          </graphic>
       </Button>
       <Separator layoutY="38.0" prefHeight="2.0" prefWidth="792.0" />
-      <Label fx:id="property" layoutX="333.0" layoutY="14.0" stylesheets="@../../../css/bcnStyle.css" text=" Reportes de Sistema" />
+      <Label fx:id="property" layoutX="352.0" layoutY="11.0" stylesheets="@../../../css/bcnStyle.css" text=" Reportes de Sistema" />
       <Button fx:id="IDBack" layoutX="1.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="129.0" styleClass="hoverButton" stylesheets="@../../../css/bcnStyle.css" text="   Regresar">
          <graphic>
             <ImageView fitHeight="26.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
@@ -30,22 +31,28 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <TabPane layoutX="1.0" layoutY="40.0" prefHeight="481.0" prefWidth="792.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutX="1.0" layoutY="40.0" prefHeight="482.0" prefWidth="807.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Historial de Transacciones">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView layoutX="14.0" layoutY="14.0" prefHeight="360.0" prefWidth="766.0">
+                        <TableView fx:id="TableTransactions" layoutX="14.0" layoutY="79.0" prefHeight="294.0" prefWidth="785.0" AnchorPane.bottomAnchor="81.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="79.0">
                           <columns>
-                            <TableColumn prefWidth="109.20001220703125" text="N° Transaction" />
-                            <TableColumn prefWidth="88.60000610351562" text="C2" />
+                            <TableColumn fx:id="IDTransaccion" prefWidth="94.0" text="N° Transacción" />
+                              <TableColumn fx:id="IDCliente" prefWidth="202.79998779296875" text="Cliente" />
+                              <TableColumn fx:id="IDDate" prefWidth="128.39996337890625" text="Fecha Transacción" />
+                              <TableColumn fx:id="IDPay" minWidth="5.199951171875" prefWidth="114.79998779296875" text="Pago Total" />
+                              <TableColumn fx:id="IDDescripcion" prefWidth="245.0" text="Descripción de la compra" />
                           </columns>
                         </TableView>
-                        <Button fx:id="IDSave" layoutX="302.0" layoutY="391.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="190.0" stylesheets="@../../../css/bcnStyle.css" text="Guardar Reporte">
+                        <Button fx:id="IDSave" layoutX="311.0" layoutY="391.0" mnemonicParsing="false" onAction="#IDSaveRepoAAction" prefHeight="38.0" prefWidth="190.0" stylesheets="@../../../css/bcnStyle.css" text="Guardar Reporte">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor></Button>
+                        <DatePicker fx:id="IDFechaInit" layoutX="14.0" layoutY="25.0" prefHeight="38.0" prefWidth="190.0" promptText="00/00/0000" />
+                        <DatePicker fx:id="IDFechaEnd" layoutX="214.0" layoutY="24.0" prefHeight="38.0" prefWidth="175.0" promptText="00/00/0000" />
+                        <Button fx:id="IDFiltrar" layoutX="404.0" layoutY="24.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="170.0" text="Filtrar" />
                      </children></AnchorPane>
             </content>
           </Tab>
@@ -53,13 +60,66 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView layoutX="14.0" layoutY="14.0" prefHeight="360.0" prefWidth="766.0">
+                        <TableView fx:id="tablaB" layoutX="14.0" layoutY="14.0" prefHeight="360.0" prefWidth="382.0">
                           <columns>
                             <TableColumn prefWidth="75.0" text="C1" />
-                            <TableColumn prefWidth="75.0" text="C2" />
+                            <TableColumn fx:id="Columna2B" prefWidth="75.0" text="C2" />
                           </columns>
                         </TableView>
-                        <Button fx:id="IDSave1" layoutX="302.0" layoutY="391.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="190.0" stylesheets="@../../../css/bcnStyle.css" text="Guardar Reporte" />
+                        <Button fx:id="IDSave1" layoutX="302.0" layoutY="391.0" mnemonicParsing="false" onAction="#IDSaveReporteBAction" prefHeight="38.0" prefWidth="190.0" stylesheets="@../../../css/bcnStyle.css" text="Guardar Reporte" />
+                        <HBox alignment="CENTER" layoutX="396.0" layoutY="94.0" prefHeight="200.0" prefWidth="382.0" AnchorPane.rightAnchor="14.0">
+                           <children>
+                              <VBox alignment="CENTER" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <HBox alignment="CENTER" prefHeight="54.0" prefWidth="380.0" VBox.vgrow="ALWAYS">
+                                       <children>
+                                          <Label text="ID Cliente:" HBox.hgrow="ALWAYS">
+                                             <HBox.margin>
+                                                <Insets left="10.0" right="10.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                          <TextField fx:id="tfIDB" HBox.hgrow="ALWAYS">
+                                             <HBox.margin>
+                                                <Insets left="10.0" right="10.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
+                                       <children>
+                                          <Label text="Fecha de Inicio:" HBox.hgrow="ALWAYS">
+                                             <HBox.margin>
+                                                <Insets left="10.0" right="10.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                          <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                             <children>
+                                                <Label text="YYYY-MM-DD" />
+                                                <TextField fx:id="tfFechaInicioB" />
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" layoutX="10.0" layoutY="35.0" prefWidth="382.0" VBox.vgrow="ALWAYS">
+                                       <children>
+                                          <Label text="Fecha Final:" HBox.hgrow="ALWAYS">
+                                             <HBox.margin>
+                                                <Insets left="10.0" right="10.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                          <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                             <children>
+                                                <Label text="YYYY-MM-DD" />
+                                                <TextField fx:id="tfFechaFinalB" />
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                    <Button fx:id="btnBuscarB" mnemonicParsing="false" onAction="#btnBuscarRegistroBAction" text="Buscar Registros" VBox.vgrow="ALWAYS" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
                      </children>
                      <cursor>
                         <Cursor fx:constant="HAND" />
