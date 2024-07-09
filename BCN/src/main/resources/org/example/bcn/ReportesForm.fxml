@@ -187,10 +187,12 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView layoutX="14.0" layoutY="14.0" prefHeight="360.0" prefWidth="766.0">
+                        <TableView fx:id="ReporteTarjetas" layoutX="14.0" layoutY="14.0" prefHeight="360.0" prefWidth="766.0">
                            <columns>
-                              <TableColumn prefWidth="109.20001220703125" text="N° Transaction" />
-                              <TableColumn prefWidth="88.60000610351562" text="C2" />
+                              <TableColumn fx:id="CClienteID" prefWidth="54.600006103515625" text="ID" />
+                              <TableColumn fx:id="colNombre" prefWidth="209.0" text="Nombre" />
+                              <TableColumn fx:id="colApellido" prefWidth="219.0" text="Apellido" />
+                              <TableColumn fx:id="colNumTarjeta" prefWidth="280.800048828125" text="N° Tarjeta" />
                            </columns>
                         </TableView>
                         <Button fx:id="IDSave4" layoutX="302.0" layoutY="391.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="190.0" stylesheets="@../../../css/bcnStyle.css" text="Guardar Reporte">
