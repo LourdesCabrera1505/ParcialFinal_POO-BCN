@@ -39,6 +39,7 @@ public class ClientesForm implements Initializable {
         }
     }
 
+
     @FXML
     private  void HandleMinimizeButton (ActionEvent event) {
         Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
