@@ -22,17 +22,17 @@ public class ReportesForm {
     @FXML
     private Button minimizeButton;
     @FXML
-    private TableView<ReporteC> tableView; //00149823 Se agrega un TableView para poder ver la consulta
+    private TableView<ReporteC> ReporteTarjetas;
     @FXML
-    private TableColumn<ReporteC, Integer> colIdCliente; //00149823 Se agrega una columna para el id del cliente
+    private TableColumn<ReporteC, Integer> CClienteID;
     @FXML
     private TableColumn<ReporteC, String> colNombre; //00149823 Nombre del cliente juento al id
     @FXML
     private TableColumn<ReporteC, String> colApellido; //00149824 Columna para el apellido del cliente
     @FXML
-    private TableColumn<ReporteC, Integer> colIdCard; //00149823 Se agrega el id de la tarjeta
+    private TableColumn<ReporteC, String> colNumTarjeta;
     @FXML
-    private TableColumn<ReporteC, String> colNumTarjeta; //00149823 El numero de tarjeta del cliente
+    private TableColumn<ReporteC, String> colTipoTarjeta;
 
 
     @FXML
@@ -42,37 +42,45 @@ public class ReportesForm {
     }
 
     @FXML
-    public void initialize() { //00149823 Esta función sirve para inicializar cada campo de la consulta
-        colIdCliente.setCellValueFactory(new PropertyValueFactory<>("id_Cliente")); //00149823 Aqui es la columna y se pasa el "id_Cliente"
-        colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        colApellido.setCellValueFactory(new PropertyValueFactory<>("apellido"));
-        colIdCard.setCellValueFactory(new PropertyValueFactory<>("id_Card"));
-        colNumTarjeta.setCellValueFactory(new PropertyValueFactory<>("numeroCuentaCensurado"));
-
-        tableView.setItems(getTarjetasFromDatabase()); //00149823 Se cargan los datos a la TableView
+    public void initialize(){
+        CClienteID.setCellValueFactory(new PropertyValueFactory<>("ID"));
+        colNombre.setCellValueFactory(new PropertyValueFactory<>("Nombre"));
+        colApellido.setCellValueFactory(new PropertyValueFactory<>("Apellido"));
+        colNumTarjeta.setCellValueFactory(new PropertyValueFactory<>("N° Cuenta"));
     }
 
     private ObservableList<ReporteC> getTarjetasFromDatabase () { //00149823 Esta funcion obtiene los observables de cada columna
         ObservableList<ReporteC> ReporteC = FXCollections.observableArrayList();
 
-        String query = "SELECT ce.ClienteID, ce.NameCliente AS Nombre, ce.ApellidoCliente AS Apellido, c.CardNumber, c.CardType " +
-                "FROM Cards AS c " +
-                "INNER JOIN Cliente AS ce ON ce.ClienteID = c.ClienteID"; //00149823 Consulta para poder recuprar las tarjetas y los id de los clientes
 
-        try (Connection conn = DBConnection.getInstance().getConnection();//00149823 Conexion con la base de datos mediante la instancia ya creada para que no haya repeticion
+        String query = "SELECT ce.ClienteID, ce.NameCliente AS Nombre, ce.LastNameCliente AS Apellido, c.CardNumber " +
+                "FROM Cards AS c " + "INNER JOIN Cliente AS ce ON ce.ClienteID = c.ClienteID"; //00149823 Consulta para poder recuprar las tarjetas y los id de los clientes
+
+        try (Connection conn = DBConnection.getInstance().getConnection(); //00149823 Conexion con la base de datos mediante la instancia ya creada para que no haya repeticion
              Statement stmt = conn.createStatement(); //000149823 Se crea un statement para la conexion
              ResultSet rs = stmt.executeQuery(query)) { //00149823 El resultado del statement con la consulta
 
             while (rs.next()) {
-                int idCliente = rs.getInt("ClienteID"); //00149823 Se agrega el id del cliente al resultado de la statement
-                String nombre = rs.getString("Nombre"); //00149823 Se agrega el nombre del cliente al resultado de la statement
-                String apellido = rs.getString("Apellido"); //00149823 Se agrega el apellido del cliente al resultado de la statement
-                int idCard = rs.getInt("CardID");
-                String numeroTarjeta = rs.getString("CardNumber");
+                int id_Cliente = rs.getInt("ClienteID"); //00149823 Se agrega el id del cliente al resultado de la statement
+                String nombre = rs.getString("NameCliente"); //00149823 Se agrega el nombre del cliente al resultado de la statement
+                String apellido = rs.getString("LastNameCliente"); //00149823 Se agrega el apellido del cliente al resultado de la statement
+                String numeroCuenta = rs.getString("CardNumber");
+                String tipo_tarjeta = rs.getString("CardType");
 
-                String numeroTarjetaCensurado = "XXXX XXXX XXXX " + numeroTarjeta.substring(numeroTarjeta.length() - 4); //00149823 se censura los primeros numeros de la tarjeta
+                ReporteC reporte = new ReporteC(id_Cliente,nombre, apellido);
 
-                ReporteC.add(new ReporteC(idCliente, nombre, apellido, idCard, numeroTarjetaCensurado));
+                if(tipo_tarjeta.equalsIgnoreCase("Tarjeta Credito")) {
+                    reporte.getTarjetasCredito().add(numeroCuenta);
+                } else if(tipo_tarjeta.equalsIgnoreCase("Tarjeta Debito")) {
+                    reporte.getTarjetasDebito().add(numeroCuenta);
+                }
+
+                ReporteC.add(reporte);
+
+            }
+
+            for (ReporteC reporte : ReporteC){
+                reporte.setTipo_tarjeta(reporte.getTarjetas());
             }
         } catch (SQLException e) {
             e.printStackTrace();
