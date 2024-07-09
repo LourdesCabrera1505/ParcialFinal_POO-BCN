@@ -39,17 +39,17 @@ public class PreloaderProgress {
 
         /**
          *  Este método inicia la animación de la barra de progreso y el texto de carga
-         *  se crea una linea de tiempo con multiples fotogramas clave para animar la barra de progreso
-         *  se cambia el estilo de la barra de progreso y actualiza  el texto de carga
+         *  se crea una línea de tiempo con multiples fotogramas clave para animar la barra de progreso
+         *  se cambia el estilo de la barra de progreso y actualiza el texto de carga
          * */
 
         public void start () {
-            Timeline timeline = new Timeline(); // Se genera una nueva linea de tiempo
+            Timeline timeline = new Timeline(); // Se genera una nueva línea de tiempo
             // se recorre cada modulp
             for (int i = 0; i < modules.length; i++) {
-                final double progress = (i + 1) / (double) modules.length;// se calcula el progreso para el modulo actual
-                final String module = modules[i]; // se obtiene el nombre del modulo actual  (para el texto de carga)
-                KeyFrame kfProgress = new KeyFrame(Duration.seconds(i * 0.9), // KeyFrame para cambiar el progreso de la barra de progreso en el tiempo especificado (0.9 segundos)  y
+                final double progress = (i + 1) / (double) modules.length;// se calcula el progreso para el módulo actual
+                final String module = modules[i]; // se obtiene el nombre del módulo actual (para el texto de carga)
+                KeyFrame kfProgress = new KeyFrame(Duration.seconds(i * 0.9), // KeyFrame para cambiar el progreso de la barra de progreso en el tiempo especificado (0.9 segundos) y
                         new KeyValue(progressBar.progressProperty(), progress)); // actualizar el progreso en la barra de progreso
 
                 // KeyFrame para cambiar el estilo de la barra de progreso
@@ -61,7 +61,7 @@ public class PreloaderProgress {
                         new KeyValue(progressLabel.textProperty(), " Loading " + module + "..."));
 
 
-                timeline.getKeyFrames().addAll(kfProgress,kfStyle, kfLabel); //añade los fotogramas a la linea de tiempo
+                timeline.getKeyFrames().addAll(kfProgress,kfStyle, kfLabel); //añade los fotogramas a la línea de tiempo
             }
 
             // Establece una acción a realizar cuando la línea de tiempo finalice

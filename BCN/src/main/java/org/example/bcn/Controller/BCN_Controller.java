@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 public class BCN_Controller implements Initializable {
 
     @FXML
-    private ProgressBar ID_Progress; // Declaración privada de un progress bar denominado ID_Progress . se utiliza para la indentificación del componente a utilizar
+    private ProgressBar ID_Progress; // Declaración privada de un progress bar denominado ID_Progress. Se utiliza para la identificación del componente a utilizar
 
     @FXML
     private Label progressLabel;

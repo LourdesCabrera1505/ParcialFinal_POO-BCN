@@ -5,7 +5,7 @@ public class DBConnection {
 
     private static DBConnection instance;
 
-    private  Connection connection; // Creando instancia para la conección a la base de datos
+    private Connection connection; // Creando instancia para la conección a la base de datos
 
     // Detalles de las conección
     private final String url = "jdbc:sqlserver://localhost:1433;databaseName=BCN_ParcialFinal;encrypt=true;trustServerCertificate=true";; //Asignandp la url de la base de datos
