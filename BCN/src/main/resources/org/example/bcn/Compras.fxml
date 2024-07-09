@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="467.0" prefWidth="674.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.bcn.Controller.Compras">
+   <children>
+      <Button fx:id="minimizeButton" layoutX="631.0" layoutY="-1.0" mnemonicParsing="false" onAction="#HandleMinimizeButton" prefHeight="22.0" prefWidth="43.0" stylesheets="@../../../css/bcnStyle.css">
+         <graphic>
+            <ImageView fitHeight="25.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../Images/icons8-menos-48.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Separator layoutY="32.0" prefHeight="0.0" prefWidth="667.0" />
+      <Label fx:id="property" layoutX="14.0" layoutY="7.0" stylesheets="@../../../css/bcnStyle.css" text="Sala de Ventas" />
+      <Label fx:id="Title" layoutX="276.0" layoutY="32.0" stylesheets="@../../../css/bcnStyle.css" text="Ventas" />
+      <Button fx:id="Backdown" layoutX="32.0" layoutY="49.0" mnemonicParsing="false" stylesheets="@../../../css/bcnStyle.css" text="  Regresar">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="26.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../Images/icons8-izquierda-círculo-60.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Label layoutX="73.0" layoutY="134.0" text="Fecha de Compra ↓" />
+      <Label layoutX="73.0" layoutY="237.0" text="Descipción de la Compra ↓" />
+      <Label layoutX="426.0" layoutY="134.0" text="Total de la Compra ↓" />
+      <Label layoutX="426.0" layoutY="237.0" text="Número de Cuenta ↓" />
+      <DatePicker fx:id="IDFechaVenta" layoutX="73.0" layoutY="152.0" prefHeight="34.0" prefWidth="225.0" promptText="00/00/0000" />
+      <Spinner fx:id="IDPagoTotal" editable="true" layoutX="426.0" layoutY="152.0" prefHeight="34.0" prefWidth="204.0" />
+      <TextArea fx:id="IDCompraDescripcion" layoutX="72.0" layoutY="255.0" prefHeight="146.0" prefWidth="226.0" />
+      <ComboBox fx:id="ID_InformacionCuenta" layoutX="426.0" layoutY="255.0" prefHeight="34.0" prefWidth="204.0" />
+      <Button fx:id="IDSendInfo" layoutX="426.0" layoutY="366.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="204.0" stylesheets="@../../../css/bcnStyle.css" text="Registrar Venta">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <TextField fx:id="ID_NumeroCuenrta" layoutX="426.0" layoutY="316.0" prefHeight="26.0" prefWidth="204.0" visible="false" />
+   </children>
+</AnchorPane>

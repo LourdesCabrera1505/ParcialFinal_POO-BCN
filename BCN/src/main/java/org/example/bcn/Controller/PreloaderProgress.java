@@ -172,6 +172,27 @@ public class PreloaderProgress {
                 }
             });
         }
+
+        Button shops = (Button) scene.lookup("SalesShop");
+        if (shops!=null) {
+            shops.setOnAction(event -> {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/bcn/Compras.fxml"));
+                    Parent root = loader.load();
+                    Scene salesScene = new Scene(root);
+                    primaryStage.setScene(salesScene);
+                    primaryStage.centerOnScreen();
+                    primaryStage.show();
+
+                    Button back = (Button) salesScene.lookup("#Backdown");
+                    if (back!= null) {
+                        back.setOnAction(event1 -> switchToScene("/org/example/bcn/Home.fxml"));
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
     }
 
 }

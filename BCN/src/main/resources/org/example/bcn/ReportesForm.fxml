@@ -20,7 +20,7 @@
       <Label fx:id="property" layoutX="333.0" layoutY="14.0" stylesheets="@../../../css/bcnStyle.css" text=" Reportes de Sistema" />
       <Button fx:id="IDBack" layoutX="1.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="129.0" styleClass="hoverButton" stylesheets="@../../../css/bcnStyle.css" text="   Regresar">
          <graphic>
-            <ImageView fitHeight="32.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="26.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../Images/icons8-izquierda-círculo-60.png" />
                </image>
@@ -66,7 +66,26 @@
                      </cursor></AnchorPane>
                </content>
             </Tab>
-          <Tab text="Tarjetas Afiliadas">
+            <Tab text="Historial Tarjetas Asociadas">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView layoutX="14.0" layoutY="14.0" prefHeight="360.0" prefWidth="766.0">
+                           <columns>
+                              <TableColumn prefWidth="109.20001220703125" text="N° Transaction" />
+                              <TableColumn prefWidth="88.60000610351562" text="C2" />
+                           </columns>
+                        </TableView>
+                        <Button fx:id="IDSave4" layoutX="302.0" layoutY="391.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="190.0" stylesheets="@../../../css/bcnStyle.css" text="Guardar Reporte">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+          <Tab text="Historial Tarjetas-Facilitadores">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>

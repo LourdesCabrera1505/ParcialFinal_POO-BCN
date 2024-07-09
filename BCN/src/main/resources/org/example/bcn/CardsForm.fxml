@@ -8,7 +8,7 @@
 <AnchorPane prefHeight="481.0" prefWidth="776.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.bcn.Controller.CardsForm">
    <children>
       <Separator layoutY="45.0" prefHeight="1.0" prefWidth="776.0" />
-      <Button fx:id="minimizeButton" layoutX="728.0" layoutY="-2.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="50.0" stylesheets="@../../../css/bcnStyle.css" onAction="#HandleMinimizeButton">
+      <Button fx:id="minimizeButton" layoutX="728.0" layoutY="-2.0" mnemonicParsing="false" onAction="#HandleMinimizeButton" prefHeight="42.0" prefWidth="50.0" stylesheets="@../../../css/bcnStyle.css">
          <graphic>
             <ImageView fitHeight="24.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -21,12 +21,12 @@
          </cursor>
       </Button>
       <Label fx:id="property" layoutX="22.0" layoutY="12.0" stylesheets="@../../../css/bcnStyle.css" text="Ingreso de Informacón de Tarjetas" />
-      <Button fx:id="ComeBack" layoutX="13.0" layoutY="50.0" mnemonicParsing="false" styleClass="hoverButton" stylesheets="@../../../css/bcnStyle.css" text="   Regresar">
+      <Button fx:id="ComeBack" layoutX="32.0" layoutY="49.0" mnemonicParsing="false" styleClass="hoverButton" stylesheets="@../../../css/bcnStyle.css" text="   Regresar">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
          <graphic>
-            <ImageView fitHeight="28.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="26.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../Images/icons8-izquierda-círculo-60.png" />
                </image>
@@ -44,8 +44,8 @@
       <Label layoutX="441.0" layoutY="300.0" text="Dueño de la tarjeta (Cliente) ↓" />
       <ComboBox layoutX="441.0" layoutY="318.0" prefHeight="36.0" prefWidth="250.0" promptText="Seleccione al cliente.." />
       <Label layoutX="76.0" layoutY="393.0" text="Facilitador ↓" />
-      <ComboBox layoutX="76.0" layoutY="411.0" prefHeight="36.0" prefWidth="250.0" />
-      <Button fx:id="IDSendInfo" layoutX="483.0" layoutY="402.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="165.0" stylesheets="@../../../css/bcnStyle.css" text="Enviar Informacion">
+      <ComboBox layoutX="76.0" layoutY="411.0" prefHeight="36.0" prefWidth="250.0" promptText="Seleccionar Facilitador..." />
+      <Button fx:id="IDSendInfo" layoutX="483.0" layoutY="411.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="165.0" stylesheets="@../../../css/bcnStyle.css" text="Enviar Informacion">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>

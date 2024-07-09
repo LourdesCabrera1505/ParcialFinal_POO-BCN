@@ -32,7 +32,7 @@
     -fx-text-alignment: center;
 }
 
-#minimizeButton, #CloseButton , #CardsBox, #Transactions, #ClientsBox, #RetornButton, #IDSendInfo, #IDBack, #ComeBack, #IDSave, #IDSave1, #IDSave2{
+#minimizeButton, #CloseButton , #CardsBox, #Transactions,#SalesShop, #ClientsBox, #RetornButton, #IDSendInfo, #IDBack, #ComeBack, #IDSave, #IDSave1, #IDSave2, #Backdown, #IDSave4{
     -fx-background-color: transparent;
     -fx-background-radius: 0;
     -fx-background-insets: 0;
@@ -40,7 +40,7 @@
     -fx-border-color: transparent;
 }
 
-#CardsBox , #Transactions, #ClientsBox{
+#CardsBox , #Transactions, #ClientsBox, #SalesShop{
     -fx-font-family: "Baskerville Old Face", "Britannic Bold";
     -fx-font-size: 15px;
     -fx-font-weight: bold;
@@ -49,7 +49,7 @@
     -fx-text-fill: white;
 }
 
-#CardsBox:hover , #Transactions:hover, #ClientsBox:hover{
+#CardsBox:hover , #Transactions:hover, #ClientsBox:hover, #SalesShop:hover{
     -fx-background-color: #FF6366;
 }
 
@@ -82,7 +82,7 @@
     -fx-text-fill: white;
 }
 
-#IDSave, #IDSave1, #IDSave2 {
+#IDSave, #IDSave1, #IDSave2 , #IDSave4{
     -fx-font-family: "Baskerville Old Face", "Britannic Bold";
     -fx-font-size: 15px;
     -fx-font-weight: bold;
@@ -92,12 +92,12 @@
 }
 
 
-#IDSave:hover, #IDSave1:hover, #IDSave2:hover {
-    -fx-background-color: #09A603;
+#IDSave:hover, #IDSave1:hover, #IDSave2:hover , #IDSave4:hover{
+    -fx-background-color: #5F72D9;
 }
 
 #IDSendInfo:hover {
-    -fx-background-color: #5F72D9;
+    -fx-background-color: #0ABF04;
 }
 
 #IDBack, #ComeBack {
@@ -105,6 +105,6 @@
     -fx-font-size: 15px;
 }
 
-.hoverButton:hover {
-    -fx-graphic: url(/Images/icons8-izquierda-círculo-60pink.png);
+#RetornButton:hover , #IDBack:hover , #ComeBack:hover , #Backdown:hover{
+    -fx-text-fill:  #FF6366;
 }
