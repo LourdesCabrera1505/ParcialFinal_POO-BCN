@@ -19,44 +19,44 @@ import java.util.ResourceBundle;
 
 public class CardsForm implements Initializable {
 
-    DBConnection connectionClients;
+    DBConnection connectionClients; //00149823 Conexion de la base de datos
 
     @FXML
-    private ComboBox IDFacilitador;
+    private ComboBox IDFacilitador; //00149823  un combo box que tiene el facilitador de los tipos de tarjetas
     @FXML
-    private ComboBox IDCliente;
+    private ComboBox IDCliente; //00149823 un combo box que tenga a los clientes
     @FXML
-    private TextField IDNumber;
+    private TextField IDNumber; //00149823 TextField donde se ingresaran los numeros de las tarjetas
     @FXML
-    private DatePicker IDDate;
+    private DatePicker IDDate; //00149823 un DatePicker para poder seleccionar la fecha de expiracion
     @FXML
-    private TextField IDTipo;
+    private TextField IDTipo; //00149823 otro TextField para poder ingresar si es de Debito o Credito la tarjeta
     @FXML
-    private TextField TextCliente;
+    private TextField TextCliente; //00149823 TextField no visible para poder
     @FXML
-    private TextField TextFacilitador;
+    private TextField TextFacilitador; //00149823 TextField no visible
     @FXML
-    private Button IDSendInfo;
+    private Button IDSendInfo; //00149823 Boton para poder enviar la informacion y que se actualice la base de datos
     @FXML
-    private Button minimizeButton;
+    private Button minimizeButton; //00149823 Boton para poder minimizar la pantalla
 
     @FXML
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(URL url, ResourceBundle resourceBundle) { //00149823 funcion para inicializar el boton que actualiza la base de datos
         if (IDSendInfo != null){
             IDSendInfo.setOnAction(this::createCard);
         }
     }
 
-    protected void createCard(ActionEvent event) {
+    protected void createCard(ActionEvent event) { //00149823 Funcion para poder crear una tarjeta
         try {
-            connectionClients = DBConnection.getInstance();
-            connectionClients.getConnection();
-            PreparedStatement insertSQL = connectionClients.getConnection().prepareStatement("INSERT INTO Cards (CardNumber, CardType, DateExpired, ClienteID, FacilitatorID) VALUES (?,?,?,?,?)");
-            String Tarjeta = IDNumber.getText();
-            String Tipo = IDTipo.getText();
-            String Cliente = TextCliente.getText();
+            connectionClients = DBConnection.getInstance(); //00149823 Conexion a la base de datos desde la unica instancia
+            connectionClients.getConnection(); //00149823 Conexion para los clientes
+            PreparedStatement insertSQL = connectionClients.getConnection().prepareStatement("INSERT INTO Cards (CardNumber, CardType, DateExpired, ClienteID, FacilitatorID) VALUES (?,?,?,?,?)"); //00149823 Consulta para alterar los campos de la base de datos
+            String Tarjeta = IDNumber.getText(); //00149823 Ingreso del numero de tarjeta
+            String Tipo = IDTipo.getText(); //00149823 Ingreso del tipo de tarjeta
+            String Cliente = TextCliente.getText(); //00149823 Ingreso del cliente
             String Facilitador = TextFacilitador.getText();
-            LocalDate Fecha = IDDate.getValue();
+            LocalDate Fecha = IDDate.getValue(); //00149823 Ingreso de la fecha de expiracion de tarjeta
             String FechaFormato = Fecha.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
             int IDFacilitador = ObtenerFacilitador((Connection) connectionClients, Facilitador);
             int IDCliente = ObtenerCliente((Connection) connectionClients, Cliente);
@@ -66,7 +66,7 @@ public class CardsForm implements Initializable {
             insertSQL.setInt(4, IDCliente);
             insertSQL.setInt(5, IDFacilitador);
             insertSQL.executeUpdate();
-            mostrarExito("Registro Exitoso");
+            mostrarExito("Registro Exitoso"); //00149823 Mostrar mensaje de la insercion exitosa
             ResetForm();
 
         } catch (SQLException e) {
@@ -74,22 +74,22 @@ public class CardsForm implements Initializable {
         }
     }
 
-    private int ObtenerFacilitador(Connection connection, String facilitador) throws SQLException {
+    private int ObtenerFacilitador(Connection connection, String facilitador) throws SQLException { //00149823 En esta funcion se obtienen los nombres de lls facilitadores de los tipos de tarjetas que hay
 
-        String query = "SELECT FacilitatorID FROM FACILITATOR WHERE FacilitatorName = ?";
-        try(PreparedStatement ps = connection.prepareStatement(query)) {
+        String query = "SELECT FacilitatorID FROM FACILITATOR WHERE FacilitatorName = ?"; //00149823 Consulta para obtener los nobres de los facilitadores desde la Tabla FACILITADOR
+        try(PreparedStatement ps = connection.prepareStatement(query)) { //00149823 Conexion con el requerimiento
             ps.setString(1, facilitador);
             ResultSet rs = ps.executeQuery();
             if(rs.next()) {
                 return rs.getInt("FacilitatorID");
             }else {
-                throw new SQLException("No se encontro el facilitador" + facilitador);
+                throw new SQLException("No se encontro el facilitador" + facilitador); //00149823 se muestra un mensaje sino se ha encontrado el facilitador
             }
         }
     }
 
-    private int ObtenerCliente(Connection connection, String cliente) throws SQLException {
-        String query = "SELECT ClienteID FROM CLIENTE WHERE NameCliente = ?";
+    private int ObtenerCliente(Connection connection, String cliente) throws SQLException { //00149823 En esta funcion se obtiene el cliente desde la base de datos
+        String query = "SELECT ClienteID FROM CLIENTE WHERE NameCliente = ?"; //00149823 Consulta para poder obtener los nombres de los clientes desde la tabla CLIENTE
         try(PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, cliente);
             ResultSet rs = ps.executeQuery();
