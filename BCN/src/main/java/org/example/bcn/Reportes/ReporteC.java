@@ -4,15 +4,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class ReporteC {
-    private int id_Cliente;
-    private String nombre;
-    private String apellido;
-    private ObservableList<String> TarjetasCredito;
-    private ObservableList<String> TarjetasDebito;
+    private int id_Cliente; //00149823 Aqui se declare una variable para poder tener el id_Cliente
+    private String nombre; //00149823 Variable que contiene el nombre del cliente
+    private String apellido; //00149823 Variable que tiene el apellido del cliente
+    private ObservableList<String> TarjetasCredito; //00149823 Variable que tiene a las tarjetas de credito
+    private ObservableList<String> TarjetasDebito; //00149823 Variable que tiene a las tarjetas de debito
+    private String tipo_tarjeta; //00149823 Variable que se usa para tener los tipos de Tarjeta
 
-    private String tipo_tarjeta;
-
-    public ReporteC(int id_Cliente, String nombre, String apellido) {
+    public ReporteC(int id_Cliente, String nombre, String apellido) { //Constructor publico para las variables
         this.id_Cliente = id_Cliente;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -22,8 +21,7 @@ public class ReporteC {
     }
 
 
-
-    public int getId_Cliente() {
+    public int getId_Cliente() { //00149823 Obtener el valor del Id_Cliente
         return id_Cliente;
     }
 
@@ -31,7 +29,7 @@ public class ReporteC {
         this.id_Cliente = id_Cliente;
     }
 
-    public String getNombre() {
+    public String getNombre() { //00149823 Obtener el nombre del cliente
         return nombre;
     }
 
@@ -39,7 +37,7 @@ public class ReporteC {
         this.nombre = nombre;
     }
 
-    public String getApellido() {
+    public String getApellido() { //00149823 Obtener el apellido del cliente
         return apellido;
     }
 
@@ -48,7 +46,7 @@ public class ReporteC {
     }
 
 
-    public ObservableList<String> getTarjetasCredito() {
+    public ObservableList<String> getTarjetasCredito() { // 00149823 Obtener las Tarjetas de Credito
         return TarjetasCredito;
     }
 
@@ -56,12 +54,12 @@ public class ReporteC {
         this.TarjetasCredito = tarjetasCredito;
     }
 
-    public ObservableList<String> getTarjetasDebito() {
+    public ObservableList<String> getTarjetasDebito() { //00149823 Obtener las Tarjetas de Debito
         return TarjetasDebito;
     }
 
 
-    public String getTipo_tarjeta() {
+    public String getTipo_tarjeta() { //00149823 Obtener los tipos de Tarjeta
         return tipo_tarjeta;
     }
 
@@ -73,22 +71,22 @@ public class ReporteC {
         this.TarjetasDebito = tarjetasDebito;
     }
 
-    public String getTarjetas() {
-        if (!TarjetasDebito.isEmpty() || !TarjetasCredito.isEmpty()) {
-            return  "N/A";
+    public String getTarjetas() { // 00149823 Obtener los tipos de tarjeta
+        if (!TarjetasDebito.isEmpty() || !TarjetasCredito.isEmpty()) { //00149823 Se ve si la tarjeta de Credito o Debito estan vacias
+            return  "N/A"; //00149823 Se retorna un mensaje "N/A" que significa que no tienen de ningun tipo
         }
 
-        StringBuilder censura = new StringBuilder();
-        if(!TarjetasCredito.isEmpty()) {
-            censura.append("Tarjetas de Credito:\n");
+        StringBuilder censura = new StringBuilder(); // 00149823 Se censurar el numero de tarjeta
+        if(!TarjetasCredito.isEmpty()) { //00149823 Si la Tarjeta de credito esta vacia
+            censura.append("Tarjetas de Credito:\n"); //00149823 Se manda un mensaje donde dice "Tarjeta de Credito:"
             for (String tarjeta : TarjetasCredito) {
-                censura.append("XXXX XXXX XXXX").append(tarjeta.substring(tarjeta.length()-4)).append("\n");
+                censura.append("XXXX XXXX XXXX").append(tarjeta.substring(tarjeta.length()-4)).append("\n"); //00149823 Se agregan las XXXX para poder censurar el numeroy solo mostrar los ultimos 4
             }
         }
-        if(!TarjetasDebito.isEmpty()) {
-            censura.append("Tarjetas de Debito:\n");
+        if(!TarjetasDebito.isEmpty()) { //00149823 Si la Tarjeta de Debito esta vacia
+            censura.append("Tarjetas de Debito:\n"); //00149823 Se manda un mensaje donde dice "Tarjeta de Debito:"
             for (String tarjeta : TarjetasDebito) {
-                censura.append("XXXX XXXX XXXX").append(tarjeta.substring(tarjeta.length()-4)).append("\n");
+                censura.append("XXXX XXXX XXXX").append(tarjeta.substring(tarjeta.length()-4)).append("\n"); //00149823 Se agregan las XXXX para poder censurar el numeroy solo mostrar los ultimos 4
             }
         }
         return censura.toString().trim();
