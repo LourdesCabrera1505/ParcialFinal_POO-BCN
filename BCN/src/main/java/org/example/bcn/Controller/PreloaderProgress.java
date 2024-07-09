@@ -173,7 +173,7 @@ public class PreloaderProgress {
             });
         }
 
-        Button shops = (Button) scene.lookup("SalesShop");
+        Button shops = (Button) scene.lookup("#SalesShop");
         if (shops!=null) {
             shops.setOnAction(event -> {
                 try {

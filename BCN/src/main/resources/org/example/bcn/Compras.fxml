@@ -40,8 +40,8 @@
       <Label layoutX="426.0" layoutY="237.0" text="Número de Cuenta ↓" />
       <DatePicker fx:id="IDFechaVenta" layoutX="73.0" layoutY="152.0" prefHeight="34.0" prefWidth="225.0" promptText="00/00/0000" />
       <Spinner fx:id="IDPagoTotal" editable="true" layoutX="426.0" layoutY="152.0" prefHeight="34.0" prefWidth="204.0" />
-      <TextArea fx:id="IDCompraDescripcion" layoutX="72.0" layoutY="255.0" prefHeight="146.0" prefWidth="226.0" />
-      <ComboBox fx:id="ID_InformacionCuenta" layoutX="426.0" layoutY="255.0" prefHeight="34.0" prefWidth="204.0" />
+      <TextArea fx:id="IDCompraDescripcion" layoutX="72.0" layoutY="255.0" prefHeight="146.0" prefWidth="226.0" promptText="Inserte la descripción" />
+      <ComboBox fx:id="ID_InformacionCuenta" layoutX="426.0" layoutY="255.0" prefHeight="34.0" prefWidth="204.0" promptText="Escoga una opción.." />
       <Button fx:id="IDSendInfo" layoutX="426.0" layoutY="366.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="204.0" stylesheets="@../../../css/bcnStyle.css" text="Registrar Venta">
          <cursor>
             <Cursor fx:constant="HAND" />
