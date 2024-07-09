@@ -9,7 +9,7 @@
    <children>
       <Button fx:id="minimizeButton" layoutX="746.0" layoutY="-1.0" mnemonicParsing="false" onAction="#HandleMinimizeButton" prefHeight="31.0" prefWidth="30.0" stylesheets="@../../../css/bcnStyle.css">
          <graphic>
-            <ImageView fitHeight="31.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="33.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../Images/icons8-menos-48.png" />
                </image>
@@ -18,7 +18,7 @@
       </Button>
       <Separator layoutY="38.0" prefHeight="2.0" prefWidth="792.0" />
       <Label fx:id="property" layoutX="333.0" layoutY="14.0" stylesheets="@../../../css/bcnStyle.css" text=" Reportes de Sistema" />
-      <Button fx:id="IDBack" layoutX="1.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="129.0" stylesheets="@../../../css/bcnStyle.css" text="   Regresar">
+      <Button fx:id="IDBack" layoutX="1.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="129.0" styleClass="hoverButton" stylesheets="@../../../css/bcnStyle.css" text="   Regresar">
          <graphic>
             <ImageView fitHeight="32.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>

@@ -104,3 +104,7 @@
     -fx-font-family: "Baskerville Old Face", "Britannic Bold";
     -fx-font-size: 15px;
 }
+
+.hoverButton:hover {
+    -fx-graphic: url(/Images/icons8-izquierda-círculo-60pink.png);
+}
