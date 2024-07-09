@@ -9,8 +9,8 @@ public class DBConnection {
 
     // Detalles de las conección
     private final String url = "jdbc:sqlserver://localhost:1433;databaseName=BCN_ParcialFinal;encrypt=true;trustServerCertificate=true";; //Asignandp la url de la base de datos
-    private final String user = "sa"; // definiendo el usuario con el que se accedera a la base de datos
-    private final String password = "<Delilah.1234>"; // contraseña que da el paso al usuario a la base de datos
+    private final String user = "Lourdes"; // definiendo el usuario con el que se accedera a la base de datos
+    private final String password = "dream2024"; // contraseña que da el paso al usuario a la base de datos
 
 
     // Constructor privado para evitar la creacion de instancias directas
