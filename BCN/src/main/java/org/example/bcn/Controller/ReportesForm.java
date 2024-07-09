@@ -4,40 +4,54 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.stage.Stage;
 import org.example.bcn.Connection.DBConnection;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 import java.sql.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.example.bcn.Connection.DBConnection;
+import org.example.bcn.ModeloTransacciones.Transacciones;
+import org.example.bcn.Reportes.ReporteA;
 import org.example.bcn.Reportes.ReporteC;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.ResourceBundle;
 
-public class ReportesForm {
+public class ReportesForm implements Initializable {
 
-    public Button IDSave;
-    public TextField tfIDA;
-    public TextField tfFechaInicioA;
-    public TextField tfFechaFinalA;
-    public Button btnBuscarA;
-    public TableColumn<String, String> Columna2A;
-    public TableView<String> tablaA;
-    public TextField tfIDB;
-    public TextField tfFechaInicioB;
-    public TextField tfFechaFinalB;
-    public Button btnBuscarB;
-    public TableColumn<String, String> Columna2B;
-    public TableView<String> tablaB;
+    @FXML
+    private TableView<Transacciones> TableTransactions;
+    @FXML
+    private TableColumn<Transacciones, Integer> IDTransaccion;
+    @FXML
+    private TableColumn<Transacciones, String> IDCliente;
+    @FXML
+    private TableColumn<Transacciones, Date> IDDate;
+    @FXML
+    private TableColumn<Transacciones, Double> IDPay;
+    @FXML
+    private TableColumn<Transacciones, String> IDDescripcion;
+    @FXML
+    private TableColumn<Transacciones, Boolean> IDSeleccion;
+    @FXML
+    private DatePicker IDFechaInit;
+    @FXML
+    private DatePicker IDFechaEnd;
+    @FXML
+    private Button IDFiltrar;
+    private ReporteA compraDAO;
+    // Fin Tabla Reporte A
     @FXML
     private Button minimizeButton;
     @FXML
@@ -57,6 +71,58 @@ public class ReportesForm {
     private  void HandleMinimizeButton (ActionEvent event) {
         Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
         stage.setIconified(true);
+    }
+
+
+    // Funcion para configurar la tabla y cargar datos
+
+
+    @FXML
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        compraDAO = new ReporteA();
+        IDTransaccion.setCellValueFactory(new PropertyValueFactory<>("TransactionID"));
+        IDDate.setCellValueFactory(new PropertyValueFactory<>("DateShopping"));
+        IDPay.setCellValueFactory(new PropertyValueFactory<>("TotalAmount"));
+        IDCliente.setCellValueFactory(new PropertyValueFactory<>("Nombre"));
+
+        IDSeleccion.setCellValueFactory(new PropertyValueFactory<>("seleccionado"));
+        IDSeleccion.setCellFactory(tc -> new CheckBoxTableCell<>());
+
+        TableTransactions.setItems(FXCollections.observableArrayList());
+        // fin declaracioon para reporte A
+    }
+
+    @FXML
+    protected void buscarCompras (ActionEvent event) {
+        // Obtener los datos de la fecha de inicio y fin
+        LocalDate fechaInicial = IDFechaInit.getValue();
+        LocalDate fechaFinal = IDFechaEnd.getValue();
+
+        // Validar que las fechas sean correctas
+        if (fechaInicial == null || fechaFinal == null ) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error en la fecha");
+            alert.setContentText("La fecha de inicio debe ser anterior a la fecha de fin.");
+            alert.showAndWait();
+            return;
+        }
+
+        Date fechaInicioSQL = Date.valueOf(fechaInicial);
+        Date fechaFinalSQL = Date.valueOf(fechaFinal);
+
+        try {
+            List<Transacciones> transacciones = compraDAO.listarTransacciones_Cliente(IDSeleccion, fechaInicioSQL, fechaFinalSQL);
+            ObservableList<Transacciones> lisTransacciones = FXCollections.observableArrayList(transacciones);
+
+            TableTransactions.setItems(lisTransacciones);
+        }catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error en la base de datos" + e.getMessage());
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
     }
 
     private ObservableList<ReporteC> getTarjetasFromDatabase () { //00149823 Esta funcion obtiene los observables de cada columna
