@@ -26,9 +26,9 @@ public class ReportesForm {
     @FXML
     private TableColumn<ReporteC, Integer> CClienteID;
     @FXML
-    private TableColumn<ReporteC, String> colNombre;
+    private TableColumn<ReporteC, String> colNombre; //00149823 Nombre del cliente juento al id
     @FXML
-    private TableColumn<ReporteC, String> colApellido;
+    private TableColumn<ReporteC, String> colApellido; //00149824 Columna para el apellido del cliente
     @FXML
     private TableColumn<ReporteC, String> colNumTarjeta;
     @FXML
@@ -49,20 +49,21 @@ public class ReportesForm {
         colNumTarjeta.setCellValueFactory(new PropertyValueFactory<>("N° Cuenta"));
     }
 
-    private ObservableList<ReporteC> getTarjetasFromDatabase () {
+    private ObservableList<ReporteC> getTarjetasFromDatabase () { //00149823 Esta funcion obtiene los observables de cada columna
         ObservableList<ReporteC> ReporteC = FXCollections.observableArrayList();
 
-        String query = "SELECT ce.ClienteID, ce.NameCliente AS Nombre, ce.LastNameCliente AS Apellido, c.CardNumber " +
-                "FROM Cards AS c " + "INNER JOIN Cliente AS ce ON ce.ClienteID = c.ClienteID";
 
-        try (Connection conn = DBConnection.getInstance().getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
+        String query = "SELECT ce.ClienteID, ce.NameCliente AS Nombre, ce.LastNameCliente AS Apellido, c.CardNumber " +
+                "FROM Cards AS c " + "INNER JOIN Cliente AS ce ON ce.ClienteID = c.ClienteID"; //00149823 Consulta para poder recuprar las tarjetas y los id de los clientes
+
+        try (Connection conn = DBConnection.getInstance().getConnection(); //00149823 Conexion con la base de datos mediante la instancia ya creada para que no haya repeticion
+             Statement stmt = conn.createStatement(); //000149823 Se crea un statement para la conexion
+             ResultSet rs = stmt.executeQuery(query)) { //00149823 El resultado del statement con la consulta
 
             while (rs.next()) {
-                int id_Cliente = rs.getInt("ClienteID");
-                String nombre = rs.getString("NameCliente");
-                String apellido = rs.getString("LastNameCliente");
+                int id_Cliente = rs.getInt("ClienteID"); //00149823 Se agrega el id del cliente al resultado de la statement
+                String nombre = rs.getString("NameCliente"); //00149823 Se agrega el nombre del cliente al resultado de la statement
+                String apellido = rs.getString("LastNameCliente"); //00149823 Se agrega el apellido del cliente al resultado de la statement
                 String numeroCuenta = rs.getString("CardNumber");
                 String tipo_tarjeta = rs.getString("CardType");
 
