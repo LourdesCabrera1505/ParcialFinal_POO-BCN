@@ -16,4 +16,7 @@ public class ReportesForm {
         Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
         stage.setIconified(true);
     }
+
+
+
 }
