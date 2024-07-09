@@ -39,12 +39,11 @@
                      <children>
                         <TableView fx:id="TableTransactions" layoutX="14.0" layoutY="79.0" prefHeight="294.0" prefWidth="785.0" AnchorPane.bottomAnchor="81.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="79.0">
                           <columns>
-                            <TableColumn fx:id="IDSeleccion" prefWidth="74.99996662139893" text="Selección" />
                             <TableColumn fx:id="IDTransaccion" prefWidth="94.0" text="N° Transacción" />
-                              <TableColumn fx:id="IDCliente" prefWidth="168.4000244140625" text="Cliente" />
-                              <TableColumn fx:id="IDDate" prefWidth="135.79998779296875" text="Fecha Transacción" />
-                              <TableColumn fx:id="IDPay" minWidth="5.199951171875" prefWidth="77.0" text="Pago Total" />
-                              <TableColumn fx:id="IDDescripcion" prefWidth="215.800048828125" text="Descripción de la compra" />
+                              <TableColumn fx:id="IDCliente" prefWidth="202.79998779296875" text="Cliente" />
+                              <TableColumn fx:id="IDDate" prefWidth="128.39996337890625" text="Fecha Transacción" />
+                              <TableColumn fx:id="IDPay" minWidth="5.199951171875" prefWidth="114.79998779296875" text="Pago Total" />
+                              <TableColumn fx:id="IDDescripcion" prefWidth="245.0" text="Descripción de la compra" />
                           </columns>
                         </TableView>
                         <Button fx:id="IDSave" layoutX="311.0" layoutY="391.0" mnemonicParsing="false" onAction="#IDSaveRepoAAction" prefHeight="38.0" prefWidth="190.0" stylesheets="@../../../css/bcnStyle.css" text="Guardar Reporte">

@@ -8,7 +8,7 @@ public class Transacciones {
     private double TotalAmount;
     private String DescriptionShopping;
     private int ClienteID;
-    private boolean Seleccionado;
+    private int Seleccionado;
 
     public Transacciones() {
     }
@@ -53,11 +53,11 @@ public class Transacciones {
         ClienteID = clienteID;
     }
 
-    public boolean isSeleccionado() {
+    public int getSeleccionado() {
         return Seleccionado;
     }
 
-    public void setSeleccionado(boolean seleccionado) {
+    public void setSeleccionado(int seleccionado) {
         Seleccionado = seleccionado;
     }
 }

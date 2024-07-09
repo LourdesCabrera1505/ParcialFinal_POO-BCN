@@ -43,8 +43,6 @@ public class ReportesForm implements Initializable {
     @FXML
     private TableColumn<Transacciones, String> IDDescripcion;
     @FXML
-    private TableColumn<Transacciones, Boolean> IDSeleccion;
-    @FXML
     private DatePicker IDFechaInit;
     @FXML
     private DatePicker IDFechaEnd;
@@ -81,12 +79,11 @@ public class ReportesForm implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         compraDAO = new ReporteA();
         IDTransaccion.setCellValueFactory(new PropertyValueFactory<>("TransactionID"));
+        IDCliente.setCellValueFactory(new PropertyValueFactory<>("Nombre"));
         IDDate.setCellValueFactory(new PropertyValueFactory<>("DateShopping"));
         IDPay.setCellValueFactory(new PropertyValueFactory<>("TotalAmount"));
-        IDCliente.setCellValueFactory(new PropertyValueFactory<>("Nombre"));
+        IDDescripcion.setCellValueFactory(new PropertyValueFactory<>("DescriptionShopping"));
 
-        IDSeleccion.setCellValueFactory(new PropertyValueFactory<>("seleccionado"));
-        IDSeleccion.setCellFactory(tc -> new CheckBoxTableCell<>());
 
         TableTransactions.setItems(FXCollections.observableArrayList());
         // fin declaracioon para reporte A
@@ -99,7 +96,7 @@ public class ReportesForm implements Initializable {
         LocalDate fechaFinal = IDFechaEnd.getValue();
 
         // Validar que las fechas sean correctas
-        if (fechaInicial == null || fechaFinal == null ) {
+        if (fechaInicial == null || fechaFinal == null || fechaInicial.isAfter(fechaFinal)) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Error en la fecha");
@@ -111,8 +108,14 @@ public class ReportesForm implements Initializable {
         Date fechaInicioSQL = Date.valueOf(fechaInicial);
         Date fechaFinalSQL = Date.valueOf(fechaFinal);
 
+        int IDCliente = obtenerCliente();
+        if (IDCliente == -1) {
+            return;
+        }
+
+
         try {
-            List<Transacciones> transacciones = compraDAO.listarTransacciones_Cliente(IDSeleccion, fechaInicioSQL, fechaFinalSQL);
+            List<Transacciones> transacciones = compraDAO.listarTransacciones_Cliente(IDCliente, fechaInicioSQL, fechaFinalSQL);
             ObservableList<Transacciones> lisTransacciones = FXCollections.observableArrayList(transacciones);
 
             TableTransactions.setItems(lisTransacciones);
@@ -124,6 +127,25 @@ public class ReportesForm implements Initializable {
             alert.showAndWait();
         }
     }
+    @FXML
+    private int obtenerCliente() {
+        Transacciones clienteSeleccionado = TableTransactions.getSelectionModel().getSelectedItem();
+        if (clienteSeleccionado != null) {
+            return clienteSeleccionado.getClienteID();
+        } else {
+            // Si no hay ningún cliente seleccionado, se muetsra  un mensaje de error  negando que no se selecciono el cliente
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Cliente no seleccionado");
+            alert.setContentText("Por favor, selecciona un cliente.");
+            alert.showAndWait();
+
+            // Se devuelve  un valor que indica que no se ha seleccionado ningún cliente
+            // En este caso, se devuelve -1
+            return -1;
+        }
+    }
+
 
     private ObservableList<ReporteC> getTarjetasFromDatabase () { //00149823 Esta funcion obtiene los observables de cada columna
         ObservableList<ReporteC> ReporteC = FXCollections.observableArrayList();

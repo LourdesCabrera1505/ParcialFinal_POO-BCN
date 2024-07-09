@@ -1,5 +1,6 @@
 package org.example.bcn.Reportes;
 
+import javafx.scene.control.TableColumn;
 import org.example.bcn.Connection.DBConnection;
 import org.example.bcn.ModeloTransacciones.Transacciones;
 
@@ -7,8 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ReporteA {
@@ -16,9 +17,9 @@ public class ReporteA {
     public List<Transacciones> listarTransacciones_Cliente(int ClienteID, Date Fecha_Inicio, Date Fecha_Fin) throws SQLException {
         List<Transacciones> transacciones = new ArrayList<>();
 
-        String query = "SELECT TransactionID, DateShopping, TotalAmount, DescriptionShopping" +
-                        "FROM Smart_Shopping" +
-                        "WHERE ClienteID = ? AND DateShopping BETWEEN ? AND ?";
+        String query = "SELECT TransactionID, DateShopping, TotalAmount, DescriptionShopping " +
+                "FROM Smart_Shopping " +
+                "WHERE ClienteID = ? AND DateShopping BETWEEN ? AND ?";
 
         try(Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement statement = connection.prepareStatement(query)) {
@@ -45,7 +46,7 @@ public class ReporteA {
                 }
             }
         } catch (SQLException e) {
-            throw new SQLException("Error al listar las compras del cliente en el periodo  especificado ", e);
+            throw new SQLException("Error al listar las compras del cliente en el periodo especificado", e);
         }
         return transacciones;
     }
