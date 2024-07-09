@@ -32,7 +32,7 @@
     -fx-text-alignment: center;
 }
 
-#minimizeButton, #CloseButton , #CardsBox, #Transactions, #ClientsBox{
+#minimizeButton, #CloseButton , #CardsBox, #Transactions, #ClientsBox, #RetornButton, #IDSendInfo, #IDBack, #ComeBack, #IDSave, #IDSave1, #IDSave2{
     -fx-background-color: transparent;
     -fx-background-radius: 0;
     -fx-background-insets: 0;
@@ -61,14 +61,46 @@
     -fx-background-color: #9CA6A5;
 }
 
-#PropertyTitle {
+#PropertyTitle , #Property_viewTitle, #PropertyDanger, #property, #property1, #property3, #property4{
     -fx-font-family: "Baskerville Old Face", "Britannic Bold";
     -fx-font-size: 15px;
     -fx-font-weight: bold;
 }
 
-#Property_Welcome {
+#Property_Welcome, #Title, #PropertyReports , #TitleCards{
     -fx-font-family: "Baskerville Old Face", "Britannic Bold";
     -fx-font-size: 45px;
     -fx-font-weight: bold;
+}
+
+#IDSendInfo {
+    -fx-background-color: #09A603;
+    -fx-font-family: "Baskerville Old Face" , "Britannic Bold";
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5px;
+    -fx-text-fill: white;
+}
+
+#IDSave, #IDSave1, #IDSave2 {
+    -fx-font-family: "Baskerville Old Face", "Britannic Bold";
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5px;
+    -fx-background-color: #263DBF;
+    -fx-text-fill: white;
+}
+
+
+#IDSave:hover, #IDSave1:hover, #IDSave2:hover {
+    -fx-background-color: #09A603;
+}
+
+#IDSendInfo:hover {
+    -fx-background-color: #5F72D9;
+}
+
+#IDBack, #ComeBack {
+    -fx-font-family: "Baskerville Old Face", "Britannic Bold";
+    -fx-font-size: 15px;
 }

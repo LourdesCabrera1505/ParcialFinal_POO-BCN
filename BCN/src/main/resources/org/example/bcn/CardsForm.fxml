@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="481.0" prefWidth="776.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.bcn.Controller.CardsForm">
+   <children>
+      <Separator layoutY="45.0" prefHeight="1.0" prefWidth="776.0" />
+      <Button fx:id="minimizeButton" layoutX="724.0" layoutY="-2.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="52.0" stylesheets="@../../../css/bcnStyle.css">
+         <graphic>
+            <ImageView fitHeight="36.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../Images/icons8-menos-48.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Label fx:id="property" layoutX="22.0" layoutY="12.0" stylesheets="@../../../css/bcnStyle.css" text="Ingreso de Informacón de Tarjetas" />
+      <Button fx:id="ComeBack" layoutX="13.0" layoutY="50.0" mnemonicParsing="false" stylesheets="@../../../css/bcnStyle.css" text="   Regresar">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="28.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../Images/icons8-izquierda-círculo-60.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Label fx:id="TitleCards" layoutX="336.0" layoutY="50.0" stylesheets="@../../../css/bcnStyle.css" text="Cards" />
+      <Label fx:id="PropertyDanger" layoutX="76.0" layoutY="133.0" stylesheets="@../../../css/bcnStyle.css" text="* Por favor ingrese los datos de la tarjeta ↓" textFill="#ec0303" />
+      <Label layoutX="76.0" layoutY="203.0" text="Número de la tarjeta ↓" />
+      <TextField layoutX="76.0" layoutY="219.0" prefHeight="36.0" prefWidth="250.0" promptText="Ingrese el número de la tarjeta..." />
+      <Label layoutX="441.0" layoutY="203.0" text="Fecha de Expiración ↓" />
+      <DatePicker layoutX="441.0" layoutY="219.0" prefHeight="36.0" prefWidth="250.0" promptText="00/00/0000" />
+      <Label layoutX="76.0" layoutY="300.0" text="Tipo de tarjeta ↓" />
+      <TextField layoutX="76.0" layoutY="318.0" prefHeight="36.0" prefWidth="250.0" promptText="Debito/Credito.." />
+      <Label layoutX="441.0" layoutY="300.0" text="Dueño de la tarjeta (Cliente) ↓" />
+      <ComboBox layoutX="441.0" layoutY="318.0" prefHeight="36.0" prefWidth="250.0" promptText="Seleccione al cliente.." />
+      <Label layoutX="76.0" layoutY="393.0" text="Facilitador ↓" />
+      <ComboBox layoutX="76.0" layoutY="411.0" prefHeight="36.0" prefWidth="250.0" />
+      <Button fx:id="IDSendInfo" layoutX="483.0" layoutY="402.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="165.0" stylesheets="@../../../css/bcnStyle.css" text="Enviar Informacion">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+   </children>
+</AnchorPane>

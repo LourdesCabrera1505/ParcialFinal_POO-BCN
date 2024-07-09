@@ -30,7 +30,7 @@ public class Launcher extends Application {
         primaryStage.show();
 
         // Crea  una  nueva instancia de  PreloaderProgress e inicia la animacion
-        PreloaderProgress animator = new PreloaderProgress(controller.getID_Progress(), controller.getProgressLabel(), primaryStage);
+        PreloaderProgress animator = new PreloaderProgress(controller.getID_Progress(), controller.getProgressLabel(), primaryStage, controller);
         animator.start();
 
     }

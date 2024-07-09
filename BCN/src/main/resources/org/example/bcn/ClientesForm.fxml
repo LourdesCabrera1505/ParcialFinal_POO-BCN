@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="523.0" prefWidth="676.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.bcn.Controller.ClientesForm">
+   <children>
+      <Button fx:id="minimizeButton" layoutX="645.0" layoutY="1.0" minWidth="25.0" mnemonicParsing="false" onAction="#HandleMinimizeButton" prefHeight="31.0" prefWidth="31.0" stylesheets="@../../../css/bcnStyle.css">
+         <graphic>
+            <ImageView fitHeight="31.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../Images/icons8-menos-48.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Label fx:id="Property_viewTitle" layoutX="47.0" layoutY="11.0" stylesheets="@../../../css/bcnStyle.css" text="Registro de Clientes" />
+      <Separator layoutX="7.0" layoutY="36.0" prefHeight="0.0" prefWidth="663.0" />
+      <Label fx:id="Title" layoutX="266.0" layoutY="57.0" stylesheets="@../../../css/bcnStyle.css" text="Clientes" />
+      <Label fx:id="PropertyDanger" layoutX="47.0" layoutY="151.0" stylesheets="@../../../css/bcnStyle.css" text="* Por favor ingrese los datos del cliente" textFill="#f70c0c" />
+      <Label fx:id="property" layoutX="57.0" layoutY="216.0" stylesheets="@../../../css/bcnStyle.css" text="Nombre del cliente ↓" />
+      <TextField fx:id="NombreCliente" layoutX="57.0" layoutY="234.0" prefHeight="34.0" prefWidth="220.0" promptText="Johanson" stylesheets="@../../../css/bcnStyle.css" />
+      <Label fx:id="property3" layoutX="57.0" layoutY="315.0" stylesheets="@../../../css/bcnStyle.css" text="Número de contacto del Cliente ↓" />
+      <TextField fx:id="Contacto" layoutX="57.0" layoutY="333.0" prefHeight="34.0" prefWidth="220.0" promptText="4562-7856" />
+      <Label fx:id="property1" layoutX="368.0" layoutY="216.0" stylesheets="@../../../css/bcnStyle.css" text="Apellido del Cliente ↓" />
+      <TextField fx:id="ApellidoCliente" layoutX="368.0" layoutY="235.0" prefHeight="34.0" prefWidth="220.0" promptText="Smith" />
+      <Label fx:id="property4" layoutX="368.0" layoutY="315.0" stylesheets="@../../../css/bcnStyle.css" text="Dirección de Vivienda del Cliente ↓" />
+      <TextField fx:id="DireccionCliente" layoutX="368.0" layoutY="334.0" prefHeight="34.0" prefWidth="220.0" promptText="#263 Avenue Park" />
+      <Button fx:id="IDSendInfo" layoutX="434.0" layoutY="428.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="158.0" stylesheets="@../../../css/bcnStyle.css" text="Guardar Registro">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button fx:id="RetornButton" layoutX="47.0" layoutY="50.0" mnemonicParsing="false" stylesheets="@../../../css/bcnStyle.css" text="  Regresar">
+         <graphic>
+            <ImageView fitHeight="26.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../Images/icons8-izquierda-círculo-60.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+   </children>
+</AnchorPane>

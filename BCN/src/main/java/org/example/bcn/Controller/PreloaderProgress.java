@@ -7,6 +7,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.stage.Stage;
@@ -18,14 +19,17 @@ public class PreloaderProgress {
         private final ProgressBar progressBar;
         private final Label progressLabel;
         private final String[] modules;
-
         private final Stage primaryStage;
+        private final BCN_Controller controller;
+
+        private Scene previousScene;
 
 
-        public PreloaderProgress(ProgressBar progressBar, Label progressLabel, Stage primaryStage) {
+        public PreloaderProgress(ProgressBar progressBar, Label progressLabel, Stage primaryStage, BCN_Controller controller) {
             this.progressBar = progressBar;
             this.progressLabel = progressLabel;
             this.primaryStage= primaryStage;
+            this.controller = controller;
             this.modules = new String[] {
                     "Module 1", "Module 2", "Module 3",
                     "Module 4", "Module 5", "Module 6",
@@ -75,19 +79,99 @@ public class PreloaderProgress {
 
          }
 
-         private  void HomeFXML ()  {
-             try {
-                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/bcn/Home.fxml"));
-                 Parent root = loader.load();
-                 Scene scene = new Scene(root);
-                 primaryStage.setScene(scene);
-                 primaryStage.centerOnScreen();
-                 String css = getClass().getResource("/css/bcnStyle.css").toExternalForm();
-                 scene.getStylesheets().add(css);
-                 primaryStage.show(); // muestra la nueva ventana con la interfaz gráfica de la Home.fxml  en la pantalla principal
+        private void HomeFXML() {
+            switchToScene("/org/example/bcn/Home.fxml");
+        }
 
-             }catch (IOException ex) {
-                 ex.printStackTrace();
-             }
-         }
+        private void switchToScene(String fxmlPath) {
+            try {
+                previousScene = primaryStage.getScene();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+                Parent root  = loader.load();
+                Scene newScene = new Scene(root);
+                primaryStage.setScene(newScene);
+                primaryStage.centerOnScreen();
+                String css = getClass().getResource("/css/bcnStyle.css").toExternalForm();
+                newScene.getStylesheets().add(css);
+                primaryStage.show();
+
+                setupSceneHandlers(newScene);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        private void switchToPreviousScene () {
+            if(previousScene != null) {
+                primaryStage.setScene(previousScene);
+                primaryStage.centerOnScreen();
+                primaryStage.show(); // Mostrar la escena anterior
+            }
+        }
+
+    private void setupSceneHandlers(Scene scene) {
+        Button openClientRegister = (Button) scene.lookup("#ClientsBox");
+        if (openClientRegister != null) {
+            openClientRegister.setOnAction(event -> {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/bcn/ClientesForm.fxml"));
+                    Parent root = loader.load();
+                    Scene clientsScene = new Scene(root);
+                    primaryStage.setScene(clientsScene);
+                    primaryStage.centerOnScreen();
+                    primaryStage.show();
+
+                    Button back = (Button) clientsScene.lookup("#RetornButton");
+                    if (back != null) {
+                        back.setOnAction(event1 -> switchToScene("/org/example/bcn/Home.fxml"));
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+
+        Button reportes = (Button) scene.lookup("#Transactions");
+        if (reportes != null) {
+            reportes.setOnAction(event -> {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/bcn/ReportesForm.fxml"));
+                    Parent root = loader.load();
+                    Scene reportScene = new Scene(root);
+                    primaryStage.setScene(reportScene);
+                    primaryStage.centerOnScreen();
+                    primaryStage.show();
+
+                    Button back = (Button) reportScene.lookup("#IDBack");
+                    if (back != null) {
+                        back.setOnAction(event1 -> switchToScene("/org/example/bcn/Home.fxml"));
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+
+        Button cards = (Button) scene.lookup("#CardsBox");
+        if(cards != null) {
+            cards.setOnAction(event -> {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/bcn/CardsForm.fxml"));
+                    Parent root = loader.load();
+                    Scene cardsScene = new Scene(root);
+                    primaryStage.setScene(cardsScene);
+                    primaryStage.centerOnScreen();
+                    primaryStage.show();
+
+                    Button back = (Button) cardsScene.lookup("#ComeBack");
+                    if (back!= null) {
+                        back.setOnAction(event1 -> switchToScene("/org/example/bcn/Home.fxml"));
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+    }
+
 }

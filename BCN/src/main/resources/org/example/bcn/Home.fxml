@@ -6,7 +6,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="ID_ContainerMain" prefHeight="523.0" prefWidth="886.0" stylesheets="@../../../css/bcnStyle.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.bcn.Controller.BCN_Controller">
+<AnchorPane fx:id="ID_ContainerMain" prefHeight="439.0" prefWidth="888.0" stylesheets="@../../../css/bcnStyle.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.bcn.Controller.BCN_Controller">
    <children>
       <Button fx:id="minimizeButton" layoutX="799.0" layoutY="-1.0" minWidth="30.0" mnemonicParsing="false" onAction="#HandleMinimizeButton" opacity="0.53" prefHeight="38.0" prefWidth="46.0" stylesheets="@../../../css/bcnStyle.css">
          <graphic>
@@ -37,7 +37,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Separator fx:id="Separator" layoutY="39.0" prefHeight="0.0" prefWidth="888.0" />
+      <Separator fx:id="Separator" layoutY="39.0" opacity="0.34" prefHeight="0.0" prefWidth="888.0" />
       <Label fx:id="PropertyTitle" layoutX="70.0" layoutY="14.0" stylesheets="@../../../css/bcnStyle.css" text="Banco de Nlogia" />
       <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="24.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -50,17 +50,37 @@
          </image>
       </ImageView>
       <Label fx:id="Property_Welcome" layoutX="242.0" layoutY="59.0" stylesheets="@../../../css/bcnStyle.css" text=" Bienvenido de nuevo " />
-      <Button fx:id="CardsBox" layoutX="50.0" layoutY="314.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="157.0" stylesheets="@../../../css/bcnStyle.css" text="Tarjetas de Credito" />
+      <Button fx:id="CardsBox" layoutX="50.0" layoutY="314.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="157.0" stylesheets="@../../../css/bcnStyle.css" text="Tarjetas de Credito">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <ColorAdjust />
+         </effect></Button>
       <ImageView fitHeight="132.0" fitWidth="217.0" layoutX="305.0" layoutY="175.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../Images/undraw_online_transactions_02ka-removebg-preview.png" />
          </image></ImageView>
-      <Button fx:id="Transactions" layoutX="305.0" layoutY="314.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="217.0" stylesheets="@../../../css/bcnStyle.css" text="Transacciones" />
+      <Button fx:id="Transactions" layoutX="305.0" layoutY="314.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="217.0" stylesheets="@../../../css/bcnStyle.css" text="Reportes">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <ColorAdjust />
+         </effect></Button>
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="599.0" layoutY="175.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../Images/undraw_Content_creator_re_pt5b-removebg-preview.png" />
          </image>
       </ImageView>
-      <Button fx:id="ClientsBox" layoutX="606.0" layoutY="317.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/bcnStyle.css" text="Clientes" />
+      <Button fx:id="ClientsBox" layoutX="606.0" layoutY="317.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/bcnStyle.css" text="Clientes">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <ColorAdjust />
+         </effect></Button>
+
+
    </children>
 </AnchorPane>
