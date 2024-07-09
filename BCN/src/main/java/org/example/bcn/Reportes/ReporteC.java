@@ -1,19 +1,27 @@
 package org.example.bcn.Reportes;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class ReporteC {
     private int id_Cliente;
     private String nombre;
     private String apellido;
-    private int id_Card;
-    private String NumeroCuentaCensurado;
+    private ObservableList<String> TarjetasCredito;
+    private ObservableList<String> TarjetasDebito;
 
-    public ReporteC(int id_Cliente, String nombre, String apellido, int id_Card, String numeroCuentaCensurado) {
+    private String tipo_tarjeta;
+
+    public ReporteC(int id_Cliente, String nombre, String apellido) {
         this.id_Cliente = id_Cliente;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.id_Card = id_Card;
-        NumeroCuentaCensurado = numeroCuentaCensurado;
+        this.TarjetasCredito = FXCollections.observableArrayList();
+        this.TarjetasDebito = FXCollections.observableArrayList();
+
     }
+
+
 
     public int getId_Cliente() {
         return id_Cliente;
@@ -39,25 +47,52 @@ public class ReporteC {
         this.apellido = apellido;
     }
 
-    public int getId_Card() {
-        return id_Card;
+
+    public ObservableList<String> getTarjetasCredito() {
+        return TarjetasCredito;
     }
 
-    public void setId_Card(int id_Card) {
-        this.id_Card = id_Card;
+    public void setTarjetasCredito(ObservableList<String> tarjetasCredito) {
+        this.TarjetasCredito = tarjetasCredito;
     }
 
-    public String getNumeroCuentaCensurado() {
-        String numeroCuenta;
-        numeroCuenta = NumeroCuentaCensurado;
+    public ObservableList<String> getTarjetasDebito() {
+        return TarjetasDebito;
+    }
 
-        if (numeroCuenta.length() < 16) {
-            return "XXXX XXXX XXXX XXXX";
+
+    public String getTipo_tarjeta() {
+        return tipo_tarjeta;
+    }
+
+    public void setTipo_tarjeta(String tipo_tarjeta) {
+        this.tipo_tarjeta = tipo_tarjeta;
+    }
+
+    public void setTarjetasDebito(ObservableList<String> tarjetasDebito) {
+        this.TarjetasDebito = tarjetasDebito;
+    }
+
+    public String getTarjetas() {
+        if (!TarjetasDebito.isEmpty() || !TarjetasCredito.isEmpty()) {
+            return  "N/A";
         }
-        return "XXXX XXXX XXXX " + numeroCuenta.substring(numeroCuenta.length() - 4);
+
+        StringBuilder censura = new StringBuilder();
+        if(!TarjetasCredito.isEmpty()) {
+            censura.append("Tarjetas de Credito:\n");
+            for (String tarjeta : TarjetasCredito) {
+                censura.append("XXXX XXXX XXXX").append(tarjeta.substring(tarjeta.length()-4)).append("\n");
+            }
+        }
+        if(!TarjetasDebito.isEmpty()) {
+            censura.append("Tarjetas de Debito:\n");
+            for (String tarjeta : TarjetasDebito) {
+                censura.append("XXXX XXXX XXXX").append(tarjeta.substring(tarjeta.length()-4)).append("\n");
+            }
+        }
+        return censura.toString().trim();
     }
 
-    public void setNumeroCuentaCensurado(String numeroCuentaCensurado) {
-        NumeroCuentaCensurado = numeroCuentaCensurado;
-    }
+
 }
