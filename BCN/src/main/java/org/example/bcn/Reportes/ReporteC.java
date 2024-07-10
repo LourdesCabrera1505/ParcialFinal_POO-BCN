@@ -1,98 +1,88 @@
 package org.example.bcn.Reportes;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class ReporteC {
-    private int id_Cliente;
-    private String nombre;
-    private String apellido;
-    private ObservableList<String> TarjetasCredito;
-    private ObservableList<String> TarjetasDebito;
+    private final SimpleIntegerProperty clienteID;
+    private final SimpleStringProperty nombre;
+    private final SimpleStringProperty apellido;
+    private final ObservableList<String> tarjetasCredito;
+    private final ObservableList<String> tarjetasDebito;
 
-    private String tipo_tarjeta;
-
-    public ReporteC(int id_Cliente, String nombre, String apellido) {
-        this.id_Cliente = id_Cliente;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.TarjetasCredito = FXCollections.observableArrayList();
-        this.TarjetasDebito = FXCollections.observableArrayList();
-
+    public ReporteC(int clienteID, String nombre, String apellido) {
+        this.clienteID = new SimpleIntegerProperty(clienteID);
+        this.nombre = new SimpleStringProperty(nombre);
+        this.apellido = new SimpleStringProperty(apellido);
+        this.tarjetasCredito = FXCollections.observableArrayList();
+        this.tarjetasDebito = FXCollections.observableArrayList();
     }
 
-
-
-    public int getId_Cliente() {
-        return id_Cliente;
+    public int getClienteID() {
+        return clienteID.get();
     }
 
-    public void setId_Cliente(int id_Cliente) {
-        this.id_Cliente = id_Cliente;
+    public SimpleIntegerProperty clienteIDProperty() {
+        return clienteID;
     }
 
     public String getNombre() {
+        return nombre.get();
+    }
+
+    public SimpleStringProperty nombreProperty() {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public String getApellido() {
+        return apellido.get();
     }
 
-    public String getApellido() {
+    public SimpleStringProperty apellidoProperty() {
         return apellido;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-
     public ObservableList<String> getTarjetasCredito() {
-        return TarjetasCredito;
-    }
-
-    public void setTarjetasCredito(ObservableList<String> tarjetasCredito) {
-        this.TarjetasCredito = tarjetasCredito;
+        return tarjetasCredito;
     }
 
     public ObservableList<String> getTarjetasDebito() {
-        return TarjetasDebito;
+        return tarjetasDebito;
     }
 
-
-    public String getTipo_tarjeta() {
-        return tipo_tarjeta;
-    }
-
-    public void setTipo_tarjeta(String tipo_tarjeta) {
-        this.tipo_tarjeta = tipo_tarjeta;
-    }
-
-    public void setTarjetasDebito(ObservableList<String> tarjetasDebito) {
-        this.TarjetasDebito = tarjetasDebito;
-    }
-
-    public String getTarjetas() {
-        if (!TarjetasDebito.isEmpty() || !TarjetasCredito.isEmpty()) {
-            return  "N/A";
+    public void agregarTarjeta(String numeroTarjeta, String tipoTarjeta) {
+        if ("Tarjeta Credito".equalsIgnoreCase(tipoTarjeta)) {
+            tarjetasCredito.add(numeroTarjeta);
+        } else if ("Tarjeta Debito".equalsIgnoreCase(tipoTarjeta)) {
+            tarjetasDebito.add(numeroTarjeta);
         }
+    }
 
-        StringBuilder censura = new StringBuilder();
-        if(!TarjetasCredito.isEmpty()) {
-            censura.append("Tarjetas de Credito:\n");
-            for (String tarjeta : TarjetasCredito) {
-                censura.append("XXXX XXXX XXXX").append(tarjeta.substring(tarjeta.length()-4)).append("\n");
+    public String tarjetasProperty() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Tarjetas de crédito:\n");
+        if (!tarjetasCredito.isEmpty()) {
+            for (String tarjeta : tarjetasCredito) {
+                sb.append("XXXX XXXX XXXX ").append(tarjeta.substring(tarjeta.length() - 4)).append("\n");
             }
+        } else {
+            sb.append("N/A \n");
         }
-        if(!TarjetasDebito.isEmpty()) {
-            censura.append("Tarjetas de Debito:\n");
-            for (String tarjeta : TarjetasDebito) {
-                censura.append("XXXX XXXX XXXX").append(tarjeta.substring(tarjeta.length()-4)).append("\n");
+
+        sb.append("Tarjetas de Débito:\n");
+        if (!tarjetasDebito.isEmpty()) {
+            for (String tarjeta : tarjetasDebito) {
+                sb.append("XXXX XXXX XXXX ").append(tarjeta.substring(tarjeta.length() - 4)).append("\n");
             }
+        } else {
+            sb.append("N/A \n");
         }
-        return censura.toString().trim();
+
+        return sb.toString();
     }
+
 
 
 }
