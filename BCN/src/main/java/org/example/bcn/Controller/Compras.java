@@ -22,28 +22,37 @@ public class Compras implements Initializable {
 
     @FXML
     private DatePicker IDFechaVenta;
+
     @FXML
     private Spinner<Double> IDPagoTotal;
+
     @FXML
     private ComboBox<String> ID_InformacionCuenta;
+
     @FXML
     private TextArea IDCompraDescripcion;
+
     @FXML
     private Button IDSendInfo;
 
     @FXML
-    private  void HandleMinimizeButton (ActionEvent event) {
-        Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
+    private void HandleMinimizeButton(ActionEvent event) {
+        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
         stage.setIconified(true);
     }
-    @FXML
+
+    @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        if (IDSendInfo != null) {
+        // Inicialización del controlador al cargar la vista FXML
+        if (IDSendInfo != null && IDPagoTotal != null) {
             IDSendInfo.setOnAction(this::SendInformation);
-            SpinnerValueFactory<Double> valueFactory= new SpinnerValueFactory.DoubleSpinnerValueFactory(0.0, 1000.0, 0.00, 1.0);
+
+            // Configurar el Spinner de Pago Total
+            SpinnerValueFactory<Double> valueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(0.0, 1000.0, 0.00, 1.0);
             StringConverter<Double> converter = new DoubleStringConverter();
             valueFactory.setConverter(converter);
             IDPagoTotal.setValueFactory(valueFactory);
+
             try {
                 CargarInformationCuenta();
             } catch (SQLException e) {
@@ -53,39 +62,61 @@ public class Compras implements Initializable {
     }
 
     @FXML
-    protected  void SendInformation (ActionEvent event) {
-        // Send Information to the server
+    protected void SendInformation(ActionEvent event) {
+        // Método para enviar la información a la base de datos
         try {
             Connection connection = DBConnection.getInstance().getConnection();
-            // Send data to the server
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO Smart_Shopping (DateShopping, TotalAmount, DescriptionShopping, CardID) VALUES (?,?,?,?)");
 
-            LocalDate FechaVenta = IDFechaVenta.getValue();
-            double Pago = IDPagoTotal.getValue();
-            String Descripcion = IDCompraDescripcion.getText();
-            String InformacionCuenta = ID_InformacionCuenta.getValue();
+            // Preparar la sentencia SQL para insertar la compra
+            String insertQuery = "INSERT INTO Smart_Shopping (DateShopping, TotalAmount, DescriptionShopping, CardID) VALUES (?, ?, ?, ?)";
+            PreparedStatement statement = connection.prepareStatement(insertQuery);
 
-            int CardID = ObtenerInformacionCuenta(connection, InformacionCuenta);
+            // Obtener los datos desde los controles de la interfaz
+            LocalDate fechaVenta = IDFechaVenta.getValue();
+            Double pagoTotal = IDPagoTotal.getValue(); // Verifica que el tipo de retorno sea Double
+            String descripcionCompra = IDCompraDescripcion.getText();
+            String informacionCuenta = ID_InformacionCuenta.getValue();
 
-            statement.setDate(1, Date.valueOf(FechaVenta));
-            statement.setDouble(2, Pago);
-            statement.setString(3, Descripcion);
-            statement.setInt(4, CardID);
+            // Validar los datos obtenidos
+            if (fechaVenta == null || pagoTotal == null || descripcionCompra == null || descripcionCompra.trim().isEmpty() || informacionCuenta == null) {
+                System.out.println("Error: Todos los campos deben estar llenos.");
+                return;
+            }
 
-            statement.executeUpdate();
+            // Obtener el CardID desde la base de datos
+            int cardID = ObtenerCardID(connection, informacionCuenta);
+            if (cardID == -1) {
+                // Si no se encontró ninguna tarjeta con el número especificado, manejar el error
+                System.out.println("Error: No se encontró ninguna tarjeta con el número especificado.");
+                return; // Salir del método si hay un error
+            }
 
-            mostrarExito("Compra realizada exitosamente !");
+            // Establecer los parámetros de la sentencia preparada
+            statement.setDate(1, Date.valueOf(fechaVenta));
+            statement.setDouble(2, pagoTotal);
+            statement.setString(3, descripcionCompra);
+            statement.setInt(4, cardID);
 
-            Reset();
+            // Ejecutar la inserción
+            int rowsInserted = statement.executeUpdate();
+            if (rowsInserted > 0) {
+                // Mostrar éxito al usuario
+                mostrarExito("Compra realizada exitosamente");
+                // Limpiar los campos después de la inserción
+                Reset();
+            } else {
+                System.out.println("Error: No se pudo insertar el registro.");
+            }
 
-        }catch (SQLException e){
-
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
-    private void CargarInformationCuenta () throws SQLException{
+    private void CargarInformationCuenta() throws SQLException {
         Connection connection = DBConnection.getInstance().getConnection();
-        try (Statement st = connection.createStatement(); ResultSet rs = st.executeQuery("SELECT c.CardNumber , ce.NameCliente FROM Cards as c INNER JOIN  Cliente as ce ON ce.ClienteID = c.ClienteID ")){
+        String query = "SELECT c.CardNumber, ce.NameCliente FROM Cards AS c INNER JOIN Cliente AS ce ON ce.ClienteID = c.ClienteID";
+        try (Statement st = connection.createStatement(); ResultSet rs = st.executeQuery(query)) {
             ObservableList<String> options = FXCollections.observableArrayList();
             while (rs.next()) {
                 String cardNumber = censurarNumeroTarjeta(rs.getString("CardNumber"));
@@ -96,22 +127,48 @@ public class Compras implements Initializable {
         }
     }
 
-    private int ObtenerInformacionCuenta(Connection connection, String  NumeroTarjeta) throws SQLException {
-        // Obtener el número de tarjeta de la cadena seleccionada en el ComboBox
+    private int ObtenerCardID(Connection connection, String informacionCuenta) throws SQLException {
+        // Verificar si informacionCuenta es nulo o vacío
+        if (informacionCuenta == null || informacionCuenta.isEmpty()) {
+            System.out.println("Error: La información de cuenta está vacía.");
+            return -1; // Manejar el error si el ComboBox no tiene valor
+        }
 
-        String query = "SELECT CardID FROM Card WHERE NumberCard = ?";
+        // Dividir la cadena para obtener el número de tarjeta
+        String[] parts = informacionCuenta.split(" - ");
+        if (parts.length != 2) {
+            System.out.println("Error: Formato de información de cuenta incorrecto.");
+            return -1; // Manejar el error si el formato del ComboBox no es correcto
+        }
+
+        // Obtener el número de tarjeta limpio
+        String cardInfo = parts[1].trim();
+        String cardNumber = cardInfo.substring(cardInfo.length() - 4); // Obtener los últimos 4 dígitos
+        if (cardNumber.isEmpty()) {
+            System.out.println("Error: Número de tarjeta vacío.");
+            return -1; // Manejar el caso de número de tarjeta vacío
+        }
+
+        System.out.println("Debug: Número de tarjeta limpio: " + cardNumber); // Mensaje de depuración
+
+        // Consulta para obtener el CardID desde el número de tarjeta
+        String query = "SELECT CardID FROM Cards WHERE RIGHT(CardNumber, 4) = ?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setString(1, NumeroTarjeta);
+            ps.setString(1, cardNumber);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return rs.getInt("CardID");
+                int cardID = rs.getInt("CardID");
+                System.out.println("Debug: CardID encontrado: " + cardID); // Mensaje de depuración
+                return cardID;
             } else {
-                throw new SQLException("No se encontró ninguna tarjeta con el número especificado.");
+                System.out.println("Error: No se encontró ninguna tarjeta con el número especificado.");
+                return -1; // Manejar el caso en que no se encontró ninguna tarjeta
             }
         }
     }
+
     private String censurarNumeroTarjeta(String numeroTarjeta) {
-        // Ejemplo de censurado: mostrar solo los últimos cuatro dígitos
+        // Método para censurar el número de tarjeta (solo mostrar los últimos cuatro dígitos)
         if (numeroTarjeta.length() >= 4) {
             String Digito4 = numeroTarjeta.substring(numeroTarjeta.length() - 4);
             return "XXXX XXXX XXXX " + Digito4; // Oculta los primeros dígitos
@@ -119,6 +176,15 @@ public class Compras implements Initializable {
             return "XXXX XXXX XXXX XXXX"; // Manejo de longitud insuficiente, por ejemplo
         }
     }
+
+    public void Reset() {
+        // Método para limpiar los campos después de una operación
+        IDFechaVenta.setValue(null);
+        IDPagoTotal.getValueFactory().setValue(0.0);
+        IDCompraDescripcion.clear();
+        ID_InformacionCuenta.setValue(null);
+    }
+
     private void mostrarExito(String Message) {
         Dialog<Void> dialog = new Dialog<Void>(); // se crea un dialogo personalizado
         dialog.getDialogPane().setPrefHeight(95);  dialog.getDialogPane().setPrefWidth(400);
@@ -158,12 +224,4 @@ public class Compras implements Initializable {
         });
         dialog.showAndWait();
     }
-
-    public  void Reset() {
-        IDFechaVenta.setValue(null);
-        IDPagoTotal.getValueFactory().setValue(0.0);
-        IDCompraDescripcion.clear();
-        ID_InformacionCuenta.setValue(null);
-    }
-
 }

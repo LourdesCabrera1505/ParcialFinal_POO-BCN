@@ -74,7 +74,6 @@ public class CardsForm implements Initializable {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            mostrarError("Error en el registro: " + e.getMessage());
         }
     }
 
@@ -136,25 +135,44 @@ public class CardsForm implements Initializable {
         TextFacilitador.clear();
     }
 
-    private void mostrarExito(String mensaje) {
-        mostrarDialogo("Éxito", mensaje, "-fx-text-fill: green;");
-    }
 
-    private void mostrarError(String mensaje) {
-        mostrarDialogo("Error", mensaje, "-fx-text-fill: red;");
-    }
-
-    private void mostrarDialogo(String titulo, String mensaje, String estiloTexto) {
-        Dialog<Void> dialog = new Dialog<>();
-        dialog.setTitle(titulo);
-        dialog.getDialogPane().setPrefSize(400, 95);
-        ButtonType okButtonType = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().add(okButtonType);
-        Label label = new Label(mensaje);
-        label.setStyle(estiloTexto + " -fx-font-size: 14px; -fx-padding: 20px;");
-        label.setWrapText(true);
+    private void mostrarExito(String Message) {
+        Dialog<Void> dialog = new Dialog<Void>(); // se crea un dialogo personalizado
+        dialog.getDialogPane().setPrefHeight(95);  dialog.getDialogPane().setPrefWidth(400);
+        dialog.setTitle("Exito");
+        dialog.setHeaderText(null);
+        //creando al aviso botones personalizados
+        ButtonType ok = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().add(ok);
+        // creando contenido al aviso personalizado
+        Label label = new Label(Message);
+        label.setPrefWidth(150);  // Ancho deseado
+        label.setWrapText(true);  // Permitir envolver el texto si es necesario
+        label.setStyle("-fx-font-size: 14px; -fx-padding: 20px; -fx-text-fill: green; -fx-text-align: center; -fx-font-weight: bold 2px; -fx-font-family: 'Baskerville Old Face', 'Britannic Bold'");
         dialog.getDialogPane().setContent(label);
+
         dialog.initStyle(StageStyle.DECORATED);
+
+        Node okNode = dialog.getDialogPane().lookupButton(ok); // se personaliza el boton , Node es una importación que sirve como base para los elementos visuales creados desde programacion
+        if (okNode instanceof  Button) {
+            okNode.setStyle("-fx-pref-width: 217px; -fx-pref-height: 32px");
+            okNode.setStyle("-fx-background-color:  #5F72D9; -fx-text-fill: white; -fx-border-color: transparent; -fx-background-insets: 0"); // se personaliza el color y el texto del boton ok
+            okNode.setOnMouseEntered(e -> {
+                okNode.setStyle("-fx-background-color: #A9D4D9; -fx-text-fill: white");
+            });
+            okNode.setOnMouseExited(e -> {
+                okNode.setStyle("-fx-background-color: #5F72D9; -fx-text-fill: black");
+            });
+        }
+
+
+        // Maneja el tipo de accioo que realizara el boton
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == ok) {
+                return null;
+            }
+            return null;
+        });
         dialog.showAndWait();
     }
 
