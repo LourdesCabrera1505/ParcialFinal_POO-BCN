@@ -1,5 +1,6 @@
 package org.example.bcn.Connection;
 import java.sql.*;
+
 public class DBConnection {
 
     private static DBConnection instance;
@@ -7,7 +8,7 @@ public class DBConnection {
     private  Connection connection; // Creando instancia para la conección a la base de datos
 
     // Detalles de las conección
-    private final String url = "jdbc://localhost:1433;databaseName=BCN_ParcialFinal;encrypt=true;trustServerCertificate=true"; //Asignandp la url de la base de datos
+    private final String url = "jdbc:sqlserver://localhost:1433;databaseName=BCN_ParcialFinal;encrypt=true;trustServerCertificate=true";; //Asignandp la url de la base de datos
     private final String user = "Lourdes"; // definiendo el usuario con el que se accedera a la base de datos
     private final String password = "dream2024"; // contraseña que da el paso al usuario a la base de datos
 

@@ -5,9 +5,9 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="523.0" prefWidth="776.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.bcn.Controller.ReportesForm">
+<AnchorPane prefHeight="523.0" prefWidth="814.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.bcn.Controller.ReportesForm">
    <children>
-      <Button fx:id="minimizeButton" layoutX="746.0" layoutY="-1.0" mnemonicParsing="false" onAction="#HandleMinimizeButton" prefHeight="31.0" prefWidth="30.0" stylesheets="@../../../css/bcnStyle.css">
+      <Button fx:id="minimizeButton" layoutX="761.0" layoutY="1.0" mnemonicParsing="false" onAction="#HandleMinimizeButton" prefHeight="31.0" prefWidth="30.0" stylesheets="@../../../css/bcnStyle.css">
          <graphic>
             <ImageView fitHeight="33.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -17,7 +17,7 @@
          </graphic>
       </Button>
       <Separator layoutY="38.0" prefHeight="2.0" prefWidth="792.0" />
-      <Label fx:id="property" layoutX="333.0" layoutY="14.0" stylesheets="@../../../css/bcnStyle.css" text=" Reportes de Sistema" />
+      <Label fx:id="property" layoutX="352.0" layoutY="11.0" stylesheets="@../../../css/bcnStyle.css" text=" Reportes de Sistema" />
       <Button fx:id="IDBack" layoutX="1.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="129.0" styleClass="hoverButton" stylesheets="@../../../css/bcnStyle.css" text="   Regresar">
          <graphic>
             <ImageView fitHeight="26.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
@@ -30,22 +30,28 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <TabPane layoutX="1.0" layoutY="40.0" prefHeight="481.0" prefWidth="792.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutX="1.0" layoutY="40.0" prefHeight="482.0" prefWidth="807.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Historial de Transacciones">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView layoutX="14.0" layoutY="14.0" prefHeight="360.0" prefWidth="766.0">
+                        <TableView fx:id="TableTransactions" layoutX="14.0" layoutY="79.0" prefHeight="294.0" prefWidth="785.0" AnchorPane.bottomAnchor="81.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="79.0">
                           <columns>
-                            <TableColumn prefWidth="109.20001220703125" text="N° Transaction" />
-                            <TableColumn prefWidth="88.60000610351562" text="C2" />
+                            <TableColumn fx:id="IDTransaccion" prefWidth="94.0" text="N° Transacción" />
+                              <TableColumn fx:id="IDCliente" prefWidth="202.79998779296875" text="Cliente" />
+                              <TableColumn fx:id="IDDate" prefWidth="128.39996337890625" text="Fecha Transacción" />
+                              <TableColumn fx:id="IDPay" minWidth="5.199951171875" prefWidth="114.79998779296875" text="Pago Total" />
+                              <TableColumn fx:id="IDDescripcion" prefWidth="245.0" text="Descripción de la compra" />
                           </columns>
                         </TableView>
-                        <Button fx:id="IDSave" layoutX="302.0" layoutY="391.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="190.0" stylesheets="@../../../css/bcnStyle.css" text="Guardar Reporte">
+                        <Button fx:id="IDSave" layoutX="311.0" layoutY="391.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="190.0" stylesheets="@../../../css/bcnStyle.css" text="Guardar Reporte">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor></Button>
+                        <DatePicker fx:id="IDFechaInit" layoutX="14.0" layoutY="25.0" prefHeight="38.0" prefWidth="190.0" promptText="00/00/0000" />
+                        <DatePicker fx:id="IDFechaEnd" layoutX="214.0" layoutY="24.0" prefHeight="38.0" prefWidth="175.0" promptText="00/00/0000" />
+                        <Button fx:id="IDFiltrar" layoutX="404.0" layoutY="24.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="170.0" text="Filtrar" />
                      </children></AnchorPane>
             </content>
           </Tab>
@@ -53,13 +59,18 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView layoutX="14.0" layoutY="14.0" prefHeight="360.0" prefWidth="766.0">
+                        <TableView fx:id="TablaB" layoutX="14.0" layoutY="83.0" prefHeight="291.0" prefWidth="778.0">
                           <columns>
-                            <TableColumn prefWidth="75.0" text="C1" />
-                            <TableColumn prefWidth="75.0" text="C2" />
+                            <TableColumn fx:id="Transaccion" prefWidth="104.2000150680542" text="Nª Transaccion" />
+                            <TableColumn fx:id="Cliente" prefWidth="199.7999725341797" text="Cliente" />
+                              <TableColumn fx:id="Fecha" prefWidth="197.800048828125" text="Fecha" />
+                              <TableColumn fx:id="Gastos" prefWidth="275.39996337890625" text="Gastos" />
                           </columns>
                         </TableView>
                         <Button fx:id="IDSave1" layoutX="302.0" layoutY="391.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="190.0" stylesheets="@../../../css/bcnStyle.css" text="Guardar Reporte" />
+                        <DatePicker fx:id="IDSetFechaInit" layoutX="14.0" layoutY="14.0" prefHeight="38.0" prefWidth="201.0" />
+                        <DatePicker fx:id="IDSetFechaEnd" layoutX="227.0" layoutY="14.0" prefHeight="38.0" prefWidth="200.0" />
+                        <Button fx:id="filtrar" layoutX="449.0" layoutY="14.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="118.0" text="Filtrar" />
                      </children>
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -70,10 +81,12 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView layoutX="14.0" layoutY="14.0" prefHeight="360.0" prefWidth="766.0">
+                        <TableView fx:id="ReporteTarjetas" layoutX="14.0" layoutY="14.0" prefHeight="360.0" prefWidth="766.0">
                            <columns>
-                              <TableColumn prefWidth="109.20001220703125" text="N° Transaction" />
-                              <TableColumn prefWidth="88.60000610351562" text="C2" />
+                              <TableColumn fx:id="CClienteID" prefWidth="54.600006103515625" text="ID" />
+                              <TableColumn fx:id="colNombre" prefWidth="209.0" text="Nombre" />
+                              <TableColumn fx:id="colApellido" prefWidth="219.0" text="Apellido" />
+                              <TableColumn fx:id="colNumTarjeta" prefWidth="280.800048828125" text="N° Tarjeta" />
                            </columns>
                         </TableView>
                         <Button fx:id="IDSave4" layoutX="302.0" layoutY="391.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="190.0" stylesheets="@../../../css/bcnStyle.css" text="Guardar Reporte">
