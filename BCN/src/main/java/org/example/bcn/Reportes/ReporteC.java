@@ -1,98 +1,77 @@
 package org.example.bcn.Reportes;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.beans.binding.BooleanExpression;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 public class ReporteC {
-    private int id_Cliente;
-    private String nombre;
-    private String apellido;
-    private ObservableList<String> TarjetasCredito;
-    private ObservableList<String> TarjetasDebito;
+    private SimpleIntegerProperty clienteID;
+    private StringProperty nombre;
+    private StringProperty apellido;
+    private StringProperty tarjetas;
 
-    private String tipo_tarjeta;
-
-    public ReporteC(int id_Cliente, String nombre, String apellido) {
-        this.id_Cliente = id_Cliente;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.TarjetasCredito = FXCollections.observableArrayList();
-        this.TarjetasDebito = FXCollections.observableArrayList();
-
+    public ReporteC(int clienteID, String nombre, String apellido) {
+        this.clienteID = new SimpleIntegerProperty(clienteID);
+        this.nombre = new SimpleStringProperty(nombre);
+        this.apellido = new SimpleStringProperty(apellido);
+        this.tarjetas = new SimpleStringProperty("N/A");
     }
 
-
-
-    public int getId_Cliente() {
-        return id_Cliente;
+    public int getClienteID() {
+        return clienteID.get();
     }
 
-    public void setId_Cliente(int id_Cliente) {
-        this.id_Cliente = id_Cliente;
+    public void setClienteID(int clienteID) {
+        this.clienteID.set(clienteID);
     }
 
     public String getNombre() {
+        return nombre.get();
+    }
+
+    public StringProperty nombreProperty() {
         return nombre;
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.nombre.set(nombre);
     }
 
     public String getApellido() {
+        return apellido.get();
+    }
+
+    public StringProperty apellidoProperty() {
         return apellido;
     }
 
     public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-
-    public ObservableList<String> getTarjetasCredito() {
-        return TarjetasCredito;
-    }
-
-    public void setTarjetasCredito(ObservableList<String> tarjetasCredito) {
-        this.TarjetasCredito = tarjetasCredito;
-    }
-
-    public ObservableList<String> getTarjetasDebito() {
-        return TarjetasDebito;
-    }
-
-
-    public String getTipo_tarjeta() {
-        return tipo_tarjeta;
-    }
-
-    public void setTipo_tarjeta(String tipo_tarjeta) {
-        this.tipo_tarjeta = tipo_tarjeta;
-    }
-
-    public void setTarjetasDebito(ObservableList<String> tarjetasDebito) {
-        this.TarjetasDebito = tarjetasDebito;
+        this.apellido.set(apellido);
     }
 
     public String getTarjetas() {
-        if (!TarjetasDebito.isEmpty() || !TarjetasCredito.isEmpty()) {
-            return  "N/A";
-        }
-
-        StringBuilder censura = new StringBuilder();
-        if(!TarjetasCredito.isEmpty()) {
-            censura.append("Tarjetas de Credito:\n");
-            for (String tarjeta : TarjetasCredito) {
-                censura.append("XXXX XXXX XXXX").append(tarjeta.substring(tarjeta.length()-4)).append("\n");
-            }
-        }
-        if(!TarjetasDebito.isEmpty()) {
-            censura.append("Tarjetas de Debito:\n");
-            for (String tarjeta : TarjetasDebito) {
-                censura.append("XXXX XXXX XXXX").append(tarjeta.substring(tarjeta.length()-4)).append("\n");
-            }
-        }
-        return censura.toString().trim();
+        return tarjetas.get();
     }
 
+    public StringProperty tarjetasProperty() {
+        return tarjetas;
+    }
+
+    public void setTarjetas(String tarjetas) {
+        this.tarjetas.set(tarjetas);
+    }
+
+    public void agregarTarjeta(String numeroTarjeta, String tipoTarjeta) {
+        if (tipoTarjeta.equalsIgnoreCase("Tarjeta Crédito")) {
+            this.tarjetas.set(this.tarjetas.get() + "\nXXXX XXXX XXXX " + numeroTarjeta.substring(numeroTarjeta.length() - 4));
+        } else if (tipoTarjeta.equalsIgnoreCase("Tarjeta Débito")) {
+            this.tarjetas.set(this.tarjetas.get() + "\nXXXX XXXX XXXX " + numeroTarjeta.substring(numeroTarjeta.length() - 4));
+        }
+    }
+
+    public SimpleIntegerProperty clienteIDProperty() {
+        return clienteID;
+    }
 
 }

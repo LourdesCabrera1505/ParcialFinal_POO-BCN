@@ -48,6 +48,7 @@ public class ReportesForm implements Initializable {
     private Button IDFiltrar;
     @FXML
     private ObservableList<Transacciones> transaccionesList = FXCollections.observableArrayList();
+    private ObservableList<ReporteC> reporteList = FXCollections.observableArrayList();
     private Transacciones compraDAO;
     // Fin Tabla Reporte A
     @FXML
@@ -69,6 +70,7 @@ public class ReportesForm implements Initializable {
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
         transaccionesList = FXCollections.observableArrayList();
+        reporteList = FXCollections.observableArrayList();
         // Configuración de las columnas del TableView
         IDTransaccion.setCellValueFactory(cellData -> cellData.getValue().idTransaccionProperty().asObject());
         IDCliente.setCellValueFactory(cellData -> cellData.getValue().idClienteProperty());
@@ -82,11 +84,18 @@ public class ReportesForm implements Initializable {
         IDPay.setCellValueFactory(cellData -> cellData.getValue().payProperty().asObject());
         IDDescripcion.setCellValueFactory(cellData -> cellData.getValue().descripcionProperty());
         //Fin configuracion de las columnas del TableView
-      if (IDFiltrar != null) {
+
+        // Método para generar el reporte de tarjetas
+        CClienteID.setCellValueFactory(cellData -> cellData.getValue().clienteIDProperty().asObject());
+        colNombre.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
+        colApellido.setCellValueFactory(cellData -> cellData.getValue().apellidoProperty());
+        colNumTarjeta.setCellValueFactory(cellData -> cellData.getValue().tarjetasProperty());
+
+        if (IDFiltrar != null) {
             IDFiltrar.setOnAction(this::buscarCompras);
      }
         cargarDatosTabla();
-
+        cargarDatosTarjetas();
     }
 
     @FXML
@@ -94,6 +103,7 @@ public class ReportesForm implements Initializable {
         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
         stage.setIconified(true);
     }
+
 
 
 
@@ -108,13 +118,13 @@ public class ReportesForm implements Initializable {
         }
 
         // Obtener el cliente seleccionado de la tabla ReporteTarjetas
-        ReporteC clienteSeleccionado = ReporteTarjetas.getSelectionModel().getSelectedItem();
+        Transacciones clienteSeleccionado = TableTransactions.getSelectionModel().getSelectedItem();
         if (clienteSeleccionado == null) {
             System.out.println("Error: No se ha seleccionado ningún cliente.");
             return;
         }
 
-        int idClienteSeleccionado = clienteSeleccionado.getId_Cliente();
+        int idClienteSeleccionado = Integer.parseInt(clienteSeleccionado.getIdCliente());
 
         try {
             Connection connection = DBConnection.getInstance().getConnection();
@@ -190,49 +200,56 @@ public class ReportesForm implements Initializable {
         }
     }
 
+    private void cargarDatosTarjetas() {
+        // Llamar al método para obtener los datos desde la base de datos
+        reporteList = getTarjetasFromDatabase();
+
+        // Asignar los datos a la tabla
+        ReporteTarjetas.setItems(reporteList);
+    }
 
 
-//    private ObservableList<ReporteC> getTarjetasFromDatabase () { //00149823 Esta funcion obtiene los observables de cada columna
-//        ObservableList<ReporteC> ReporteC = FXCollections.observableArrayList();
-//
-//
-//        String query = "SELECT ce.ClienteID, ce.NameCliente AS Nombre, ce.LastNameCliente AS Apellido, c.CardNumber " +
-//                "FROM Cards AS c " + "INNER JOIN Cliente AS ce ON ce.ClienteID = c.ClienteID"; //00149823 Consulta para poder recuprar las tarjetas y los id de los clientes
-//
-//        try (Connection conn = DBConnection.getInstance().getConnection(); //00149823 Conexion con la base de datos mediante la instancia ya creada para que no haya repeticion
-//             Statement stmt = conn.createStatement(); //000149823 Se crea un statement para la conexion
-//             ResultSet rs = stmt.executeQuery(query)) { //00149823 El resultado del statement con la consulta
-//
-//            while (rs.next()) {
-//                int id_Cliente = rs.getInt("ClienteID"); //00149823 Se agrega el id del cliente al resultado de la statement
-//                String nombre = rs.getString("NameCliente"); //00149823 Se agrega el nombre del cliente al resultado de la statement
-//                String apellido = rs.getString("LastNameCliente"); //00149823 Se agrega el apellido del cliente al resultado de la statement
-//                String numeroCuenta = rs.getString("CardNumber");
-//                String tipo_tarjeta = rs.getString("CardType");
-//
-//                ReporteC reporte = new ReporteC(id_Cliente,nombre, apellido);
-//
-//                if(tipo_tarjeta.equalsIgnoreCase("Tarjeta Credito")) {
-//                    reporte.getTarjetasCredito().add(numeroCuenta);
-//                } else if(tipo_tarjeta.equalsIgnoreCase("Tarjeta Debito")) {
-//                    reporte.getTarjetasDebito().add(numeroCuenta);
-//                }
-//
-//                ReporteC.add(reporte);
-//
-//            }
-//
-//            for (ReporteC reporte : ReporteC){
-//                reporte.setTipo_tarjeta(reporte.getTarjetas());
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//
-//
-//        return ReporteC;
-//
-//    }
+    // Método para obtener las tarjetas asociadas a los clientes desde la base de datos
+    public ObservableList<ReporteC> getTarjetasFromDatabase() {
+        ObservableList<ReporteC> reporteCList = FXCollections.observableArrayList();
+        String query = "SELECT ce.ClienteID, ce.NameCliente AS Nombre, ce.LastNameCliente AS Apellido, c.CardNumber, c.CardType " +
+                "FROM Cards AS c " +
+                "INNER JOIN Cliente AS ce ON ce.ClienteID = c.ClienteID";
+
+        try (Connection conn = DBConnection.getInstance().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                int clienteID = rs.getInt("ClienteID");
+                String nombre = rs.getString("Nombre");
+                String apellido = rs.getString("Apellido");
+                String numeroTarjeta = rs.getString("CardNumber");
+                String tipoTarjeta = rs.getString("CardType");
+
+                boolean encontrado = false;
+                for (ReporteC reporteC : reporteCList) {
+                    if (reporteC.getClienteID() == clienteID) {
+                        reporteC.agregarTarjeta(numeroTarjeta, tipoTarjeta);
+                        encontrado = true;
+                        break;
+                    }
+                }
+
+                if (!encontrado) {
+                    ReporteC reporteC = new ReporteC(clienteID, nombre, apellido);
+                    reporteC.agregarTarjeta(numeroTarjeta, tipoTarjeta);
+                    reporteCList.add(reporteC);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return reporteCList;
+    }
+
 }
 
 
