@@ -3,6 +3,7 @@ package org.example.bcn.Controller;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,11 +11,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.example.bcn.Connection.DBConnection;
 import java.net.URL;
 import java.sql.*;
+
+import org.example.bcn.Reportes.ReporteB;
 import org.example.bcn.Reportes.Transacciones;
 import org.example.bcn.Reportes.ReporteC;
 import java.sql.Connection;
@@ -49,6 +53,8 @@ public class ReportesForm implements Initializable {
     @FXML
     private ObservableList<Transacciones> transaccionesList = FXCollections.observableArrayList();
     private ObservableList<ReporteC> reporteList = FXCollections.observableArrayList();
+
+    private ObservableList<ReporteB> reporteBS = FXCollections.observableArrayList();
     private Transacciones compraDAO;
     // Fin Tabla Reporte A
     @FXML
@@ -64,13 +70,33 @@ public class ReportesForm implements Initializable {
     @FXML
     private TableColumn<ReporteC, String> colNumTarjeta;
     @FXML
+    private TableColumn<ReporteB, String> Transaccion; //00149825 Columna para el número de tarjeta del cliente
+    @FXML
+    private TableView<ReporteB> TablaB;
+    @FXML
+    private TableColumn<ReporteB, String> Cliente; //00149826 Columna para el nombre del cliente
+    @FXML
+    private TableColumn<ReporteB, String> Fecha;
+    @FXML
+    private TableColumn<ReporteB, String> Gastos;
+
+    @FXML
+    private DatePicker IDSetFechaInit;
+    @FXML
+    private DatePicker IDSetFechaEnd;
+    @FXML
+    private Label lblTotalGastado;
+    @FXML
     private TableColumn<ReporteC, String> colTipoTarjeta;
+    @FXML
+    private Button filtrar;
 
     // Funcion para configurar la tabla y cargar datos
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
         transaccionesList = FXCollections.observableArrayList();
         reporteList = FXCollections.observableArrayList();
+        reporteBS = FXCollections.observableArrayList();
         // Configuración de las columnas del TableView
         IDTransaccion.setCellValueFactory(cellData -> cellData.getValue().idTransaccionProperty().asObject());
         IDCliente.setCellValueFactory(cellData -> cellData.getValue().idClienteProperty());
@@ -84,18 +110,20 @@ public class ReportesForm implements Initializable {
         IDPay.setCellValueFactory(cellData -> cellData.getValue().payProperty().asObject());
         IDDescripcion.setCellValueFactory(cellData -> cellData.getValue().descripcionProperty());
         //Fin configuracion de las columnas del TableView
-
-        // Método para generar el reporte de tarjetas
-        CClienteID.setCellValueFactory(cellData -> cellData.getValue().clienteIDProperty().asObject());
-        colNombre.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
-        colApellido.setCellValueFactory(cellData -> cellData.getValue().apellidoProperty());
-        colNumTarjeta.setCellValueFactory(cellData -> cellData.getValue().tarjetasProperty());
+        Transaccion.setCellValueFactory(new PropertyValueFactory<>("idTransaccion"));
+        Cliente.setCellValueFactory(new PropertyValueFactory<>("idCliente"));
+        Fecha.setCellValueFactory(new PropertyValueFactory<>("date"));
+        Gastos.setCellValueFactory(new PropertyValueFactory<>("pay"));
 
         if (IDFiltrar != null) {
             IDFiltrar.setOnAction(this::buscarCompras);
-     }
+        }
+        filtrar.setOnAction(event -> filtrarPorFechas());
         cargarDatosTabla();
-        cargarDatosTarjetas();
+        inicializarTabla();
+        cargarDatos();
+        CargarPagos();
+
     }
 
     @FXML
@@ -103,8 +131,6 @@ public class ReportesForm implements Initializable {
         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
         stage.setIconified(true);
     }
-
-
 
 
     @FXML
@@ -200,17 +226,25 @@ public class ReportesForm implements Initializable {
         }
     }
 
-    private void cargarDatosTarjetas() {
-        // Llamar al método para obtener los datos desde la base de datos
-        reporteList = getTarjetasFromDatabase();
 
-        // Asignar los datos a la tabla
+    private void inicializarTabla() {
+        CClienteID.setCellValueFactory(cellData -> cellData.getValue().clienteIDProperty().asObject());
+        colNombre.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
+        colApellido.setCellValueFactory(cellData -> cellData.getValue().apellidoProperty());
+        colNumTarjeta.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().tarjetasProperty()));
+
         ReporteTarjetas.setItems(reporteList);
     }
 
+    private void cargarDatos() {
+        reporteList.addAll(getTarjetasFromDatabase());
 
-    // Método para obtener las tarjetas asociadas a los clientes desde la base de datos
-    public ObservableList<ReporteC> getTarjetasFromDatabase() {
+        for (ReporteC reporte : reporteList) {
+            reporte.tarjetasProperty();
+        }
+    }
+
+    private ObservableList<ReporteC> getTarjetasFromDatabase() {
         ObservableList<ReporteC> reporteCList = FXCollections.observableArrayList();
         String query = "SELECT ce.ClienteID, ce.NameCliente AS Nombre, ce.LastNameCliente AS Apellido, c.CardNumber, c.CardType " +
                 "FROM Cards AS c " +
@@ -250,6 +284,96 @@ public class ReportesForm implements Initializable {
         return reporteCList;
     }
 
+    private void CargarPagos() {
+        try {
+            Connection connection = DBConnection.getInstance().getConnection();
+            String query = "SELECT s.TransactionID, ce.NameCliente, s.DateShopping, s.TotalAmount " +
+                    "FROM Smart_Shopping s " +
+                    "INNER JOIN Cards c ON c.CardID = s.CardID " +
+                    "INNER JOIN Cliente ce ON ce.ClienteID = c.ClienteID";
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+
+            reporteBS.clear(); // Limpiar la lista antes de agregar nuevos pagos
+
+            while (rs.next()) {
+                int idTransaccion = rs.getInt("TransactionID");
+                String idCliente = rs.getString("NameCliente");
+                Date date = rs.getDate("DateShopping");
+                double pay = rs.getDouble("TotalAmount");
+
+                reporteBS.add(new ReporteB(idTransaccion, idCliente, date, pay));
+            }
+
+            // Asignar los datos a la TableView en el hilo de JavaFX
+            Platform.runLater(() -> {
+                TablaB.setItems(reporteBS);
+            });
+
+            System.out.println("Número de transacciones encontradas: " + reporteBS.size());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error al ejecutar la consulta SQL: " + e.getMessage());
+        }
+    }
+
+    @FXML
+
+    protected void filtrarPorFechas() {
+        LocalDate fechaInicio = IDFechaInit.getValue();
+        LocalDate fechaFin = IDFechaEnd.getValue();
+
+        if (fechaInicio == null || fechaFin == null || fechaInicio.isAfter(fechaFin)) {
+            showAlert("Error", "Seleccione un rango de fechas válido.");
+            return;
+        }
+
+        try {
+            Connection connection = DBConnection.getInstance().getConnection();
+            String query = "SELECT TransactionID, NameCliente, DateShopping, TotalAmount " +
+                    "FROM Smart_Shopping s " +
+                    "INNER JOIN Cards c ON c.CardID = s.CardID " +
+                    "INNER JOIN Cliente ce ON ce.ClienteID = c.ClienteID " +
+                    "WHERE ce.ClienteID = ? AND s.DateShopping BETWEEN ? AND ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, 1); // Reemplazar con el ID del cliente (ejemplo: 1)
+            statement.setDate(2, Date.valueOf(fechaInicio));
+            statement.setDate(3, Date.valueOf(fechaFin));
+
+            ResultSet rs = statement.executeQuery();
+            transaccionesList.clear();
+
+            double totalGastado = 0;
+            while (rs.next()) {
+                int idTransaccion = rs.getInt("TransactionID");
+                String idCliente = rs.getString("NameCliente");
+                Date date = rs.getDate("DateShopping");
+                double pay = rs.getDouble("TotalAmount");
+
+                reporteBS.add(new ReporteB(idTransaccion, idCliente, date, pay));
+                totalGastado += pay;
+            }
+
+            TablaB.setItems(reporteBS);
+            lblTotalGastado.setText("Total gastado: $" + totalGastado);
+
+        } catch (SQLException e) {
+            showAlert("Error", "Error al ejecutar la consulta SQL: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 }
+
+
+
+
 
 

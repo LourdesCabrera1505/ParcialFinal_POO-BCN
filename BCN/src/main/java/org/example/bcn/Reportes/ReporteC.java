@@ -1,77 +1,88 @@
 package org.example.bcn.Reportes;
 
-import javafx.beans.binding.BooleanExpression;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class ReporteC {
-    private SimpleIntegerProperty clienteID;
-    private StringProperty nombre;
-    private StringProperty apellido;
-    private StringProperty tarjetas;
+    private final SimpleIntegerProperty clienteID;
+    private final SimpleStringProperty nombre;
+    private final SimpleStringProperty apellido;
+    private final ObservableList<String> tarjetasCredito;
+    private final ObservableList<String> tarjetasDebito;
 
     public ReporteC(int clienteID, String nombre, String apellido) {
         this.clienteID = new SimpleIntegerProperty(clienteID);
         this.nombre = new SimpleStringProperty(nombre);
         this.apellido = new SimpleStringProperty(apellido);
-        this.tarjetas = new SimpleStringProperty("N/A");
+        this.tarjetasCredito = FXCollections.observableArrayList();
+        this.tarjetasDebito = FXCollections.observableArrayList();
     }
 
     public int getClienteID() {
         return clienteID.get();
     }
 
-    public void setClienteID(int clienteID) {
-        this.clienteID.set(clienteID);
+    public SimpleIntegerProperty clienteIDProperty() {
+        return clienteID;
     }
 
     public String getNombre() {
         return nombre.get();
     }
 
-    public StringProperty nombreProperty() {
+    public SimpleStringProperty nombreProperty() {
         return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre.set(nombre);
     }
 
     public String getApellido() {
         return apellido.get();
     }
 
-    public StringProperty apellidoProperty() {
+    public SimpleStringProperty apellidoProperty() {
         return apellido;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido.set(apellido);
+    public ObservableList<String> getTarjetasCredito() {
+        return tarjetasCredito;
     }
 
-    public String getTarjetas() {
-        return tarjetas.get();
-    }
-
-    public StringProperty tarjetasProperty() {
-        return tarjetas;
-    }
-
-    public void setTarjetas(String tarjetas) {
-        this.tarjetas.set(tarjetas);
+    public ObservableList<String> getTarjetasDebito() {
+        return tarjetasDebito;
     }
 
     public void agregarTarjeta(String numeroTarjeta, String tipoTarjeta) {
-        if (tipoTarjeta.equalsIgnoreCase("Tarjeta Crédito")) {
-            this.tarjetas.set(this.tarjetas.get() + "\nXXXX XXXX XXXX " + numeroTarjeta.substring(numeroTarjeta.length() - 4));
-        } else if (tipoTarjeta.equalsIgnoreCase("Tarjeta Débito")) {
-            this.tarjetas.set(this.tarjetas.get() + "\nXXXX XXXX XXXX " + numeroTarjeta.substring(numeroTarjeta.length() - 4));
+        if ("Tarjeta Credito".equalsIgnoreCase(tipoTarjeta)) {
+            tarjetasCredito.add(numeroTarjeta);
+        } else if ("Tarjeta Debito".equalsIgnoreCase(tipoTarjeta)) {
+            tarjetasDebito.add(numeroTarjeta);
         }
     }
 
-    public SimpleIntegerProperty clienteIDProperty() {
-        return clienteID;
+    public String tarjetasProperty() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Tarjetas de crédito:\n");
+        if (!tarjetasCredito.isEmpty()) {
+            for (String tarjeta : tarjetasCredito) {
+                sb.append("XXXX XXXX XXXX ").append(tarjeta.substring(tarjeta.length() - 4)).append("\n");
+            }
+        } else {
+            sb.append("N/A \n");
+        }
+
+        sb.append("Tarjetas de Débito:\n");
+        if (!tarjetasDebito.isEmpty()) {
+            for (String tarjeta : tarjetasDebito) {
+                sb.append("XXXX XXXX XXXX ").append(tarjeta.substring(tarjeta.length() - 4)).append("\n");
+            }
+        } else {
+            sb.append("N/A \n");
+        }
+
+        return sb.toString();
     }
+
+
 
 }
