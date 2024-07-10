@@ -115,6 +115,7 @@ public class ReportesForm implements Initializable {
         Fecha.setCellValueFactory(new PropertyValueFactory<>("date"));
         Gastos.setCellValueFactory(new PropertyValueFactory<>("pay"));
 
+
         if (IDFiltrar != null) {
             IDFiltrar.setOnAction(this::buscarCompras);
         }
@@ -122,7 +123,7 @@ public class ReportesForm implements Initializable {
         cargarDatosTabla();
         inicializarTabla();
         cargarDatos();
-        CargarPagos();
+        cargarPagos();
 
     }
 
@@ -284,22 +285,23 @@ public class ReportesForm implements Initializable {
         return reporteCList;
     }
 
-    private void CargarPagos() {
+    private void cargarPagos() {
         try {
             Connection connection = DBConnection.getInstance().getConnection();
             String query = "SELECT s.TransactionID, ce.NameCliente, s.DateShopping, s.TotalAmount " +
                     "FROM Smart_Shopping s " +
                     "INNER JOIN Cards c ON c.CardID = s.CardID " +
                     "INNER JOIN Cliente ce ON ce.ClienteID = c.ClienteID";
+
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(query);
 
-            reporteBS.clear(); // Limpiar la lista antes de agregar nuevos pagos
+            reporteBS.clear(); // Limpiar la lista antes de agregar nuevas transacciones
 
             while (rs.next()) {
                 int idTransaccion = rs.getInt("TransactionID");
                 String idCliente = rs.getString("NameCliente");
-                Date date = rs.getDate("DateShopping");
+                java.sql.Date date = rs.getDate("DateShopping");
                 double pay = rs.getDouble("TotalAmount");
 
                 reporteBS.add(new ReporteB(idTransaccion, idCliente, date, pay));
@@ -317,6 +319,7 @@ public class ReportesForm implements Initializable {
             System.out.println("Error al ejecutar la consulta SQL: " + e.getMessage());
         }
     }
+
 
     @FXML
 
