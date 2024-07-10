@@ -55,3 +55,26 @@ ALTER TABLE Smart_Shopping
 ADD CONSTRAINT FK_Cards FOREIGN KEY (CardID) REFERENCES Cards(CardID) ON DELETE CASCADE 
 
 SELECT * FROM Cliente
+
+SELECT TransactionID, ce.ClienteID, ce.NameCliente, s.DateShopping, s.TotalAmount, SUM(s.TotalAmount) AS Gastos 
+                    FROM Smart_Shopping s 
+                    INNER JOIN Cards c ON c.CardID = s.CardID 
+                    INNER JOIN Cliente ce ON ce.ClienteID = c.ClienteID 
+					WHERE ce.ClienteID = 2 AND s.DateShopping BETWEEN '2024-07-16' AND '2024-07-19' 
+					GROUP BY s.TransactionID, ce.ClienteID, ce.NameCliente, s.DateShopping, s.TotalAmount
+
+SELECT SUM(s.TotalAmount) AS TotalGastado
+FROM Smart_Shopping s
+INNER JOIN Cards c ON c.CardID = s.CardID
+INNER JOIN Cliente ce ON ce.ClienteID = c.ClienteID
+WHERE ce.ClienteID = 2 AND MONTH(s.DateShopping) = '2024-07-16' AND YEAR(s.DateShopping) = '2024-07-19'
+
+SELECT s.TransactionID, ce.ClienteID, ce.NameCliente, s.DateShopping, s.TotalAmount, 
+       SUM(s.TotalAmount) OVER (PARTITION BY ce.ClienteID) AS Gastos 
+FROM Smart_Shopping s 
+INNER JOIN Cards c ON c.CardID = s.CardID 
+INNER JOIN Cliente ce ON ce.ClienteID = c.ClienteID 
+WHERE ce.ClienteID = 2 AND s.DateShopping BETWEEN '2024-07-16' AND '2024-07-19';
+
+select * from Smart_Shopping
+

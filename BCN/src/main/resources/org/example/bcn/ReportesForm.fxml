@@ -44,6 +44,7 @@
                               <TableColumn fx:id="IDPay" minWidth="5.199951171875" prefWidth="114.79998779296875" text="Pago Total" />
                               <TableColumn fx:id="IDDescripcion" prefWidth="245.0" text="Descripción de la compra" />
                           </columns>
+
                         </TableView>
                         <Button fx:id="IDSave" layoutX="311.0" layoutY="391.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="190.0" stylesheets="@../../../css/bcnStyle.css" text="Guardar Reporte">
                            <cursor>
@@ -61,15 +62,17 @@
                      <children>
                         <TableView fx:id="TablaB" layoutX="14.0" layoutY="83.0" prefHeight="291.0" prefWidth="778.0">
                           <columns>
-                            <TableColumn fx:id="Transaccion" prefWidth="104.2000150680542" text="Nª Transaccion" />
                             <TableColumn fx:id="Cliente" prefWidth="199.7999725341797" text="Cliente" />
-                              <TableColumn fx:id="Fecha" prefWidth="197.800048828125" text="Fecha" />
-                              <TableColumn fx:id="Gastos" prefWidth="275.39996337890625" text="Gastos" />
+                              <TableColumn fx:id="Fecha" prefWidth="353.40000915527344" text="Fecha" />
+                              <TableColumn fx:id="Gastos" prefWidth="121.0" text="Gastos" />
                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
                         </TableView>
                         <Button fx:id="IDSave1" layoutX="302.0" layoutY="391.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="190.0" stylesheets="@../../../css/bcnStyle.css" text="Guardar Reporte" />
-                        <DatePicker fx:id="IDSetFechaInit" layoutX="14.0" layoutY="14.0" prefHeight="38.0" prefWidth="201.0" />
-                        <DatePicker fx:id="IDSetFechaEnd" layoutX="227.0" layoutY="14.0" prefHeight="38.0" prefWidth="200.0" />
+                        <DatePicker fx:id="IDSetFechaInit" layoutX="14.0" layoutY="14.0" prefHeight="38.0" prefWidth="201.0" promptText="00/00/0000" />
+                        <DatePicker fx:id="IDSetFechaEnd" layoutX="227.0" layoutY="14.0" prefHeight="38.0" prefWidth="200.0" promptText="00/00/0000" />
                         <Button fx:id="filtrar" layoutX="449.0" layoutY="14.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="118.0" text="Filtrar" />
                      </children>
                      <cursor>
@@ -102,16 +105,22 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView layoutX="14.0" layoutY="14.0" prefHeight="360.0" prefWidth="766.0">
+                        <TableView fx:id="TablaFacilitadores" layoutX="14.0" layoutY="62.0" prefHeight="312.0" prefWidth="777.0">
                           <columns>
-                            <TableColumn prefWidth="75.0" text="C1" />
-                            <TableColumn prefWidth="75.0" text="C2" />
+                            <TableColumn fx:id="Clients" prefWidth="75.0" text="Cliente " />
+                            <TableColumn fx:id="Cantidad" prefWidth="140.20001983642578" text="Compras Realizadas" />
+                              <TableColumn fx:id="GastoT" prefWidth="75.0" text="Gasto total" />
                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
                         </TableView>
                         <Button fx:id="IDSave2" layoutX="302.0" layoutY="391.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="190.0" stylesheets="@../../../css/bcnStyle.css" text="Guardar Reporte">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor></Button>
+                        <ComboBox fx:id="FacilitadoresConsulta" layoutX="14.0" layoutY="14.0" prefHeight="38.0" prefWidth="196.0" promptText="Seleccione un Facilitador..." />
+                        <Button fx:id="Historial" layoutX="225.0" layoutY="14.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="162.0" text="Filtrar" />
                      </children></AnchorPane>
             </content>
           </Tab>

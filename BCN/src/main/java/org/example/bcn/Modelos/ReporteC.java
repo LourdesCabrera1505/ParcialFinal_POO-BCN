@@ -1,4 +1,4 @@
-package org.example.bcn.Reportes;
+package org.example.bcn.Modelos;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
