@@ -53,6 +53,8 @@
                         <DatePicker fx:id="IDFechaInit" layoutX="14.0" layoutY="25.0" prefHeight="38.0" prefWidth="190.0" promptText="00/00/0000" />
                         <DatePicker fx:id="IDFechaEnd" layoutX="214.0" layoutY="24.0" prefHeight="38.0" prefWidth="175.0" promptText="00/00/0000" />
                         <Button fx:id="IDFiltrar" layoutX="404.0" layoutY="24.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="170.0" text="Filtrar" />
+                        <Label layoutX="14.0" layoutY="6.0" text="Fecha inicio" />
+                        <Label layoutX="214.0" layoutY="6.0" text="Fecha Fin" />
                      </children></AnchorPane>
             </content>
           </Tab>
@@ -71,9 +73,11 @@
                            </columnResizePolicy>
                         </TableView>
                         <Button fx:id="IDSave1" layoutX="302.0" layoutY="391.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="190.0" stylesheets="@../../../css/bcnStyle.css" text="Guardar Reporte" />
-                        <DatePicker fx:id="IDSetFechaInit" layoutX="14.0" layoutY="14.0" prefHeight="38.0" prefWidth="201.0" promptText="00/00/0000" />
-                        <DatePicker fx:id="IDSetFechaEnd" layoutX="227.0" layoutY="14.0" prefHeight="38.0" prefWidth="200.0" promptText="00/00/0000" />
+                        <DatePicker fx:id="IDSetFechaInit" layoutX="14.0" layoutY="33.0" prefHeight="38.0" prefWidth="201.0" promptText="00/00/0000" />
+                        <DatePicker fx:id="IDSetFechaEnd" layoutX="227.0" layoutY="33.0" prefHeight="38.0" prefWidth="200.0" promptText="00/00/0000" />
                         <Button fx:id="filtrar" layoutX="449.0" layoutY="14.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="118.0" text="Filtrar" />
+                        <Label layoutX="14.0" layoutY="14.0" text="Fecha  inicio" />
+                        <Label layoutX="227.0" layoutY="14.0" text="Fecha Fin" />
                      </children>
                      <cursor>
                         <Cursor fx:constant="HAND" />
