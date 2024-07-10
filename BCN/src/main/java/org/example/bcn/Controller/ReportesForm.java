@@ -332,6 +332,14 @@ public class ReportesForm implements Initializable {
             return;
         }
 
+        // Obtener el cliente seleccionado de la tabla ReporteTarjetas
+        ReporteB clienteSeleccionado = TablaB.getSelectionModel().getSelectedItem();
+        if (clienteSeleccionado == null) {
+            System.out.println("Error: No se ha seleccionado ningún cliente.");
+            return;
+        }
+        int idClienteSeleccionado = Integer.parseInt(clienteSeleccionado.getIdCliente());
+
         try {
             Connection connection = DBConnection.getInstance().getConnection();
             String query = "SELECT TransactionID, NameCliente, DateShopping, TotalAmount " +
@@ -340,7 +348,7 @@ public class ReportesForm implements Initializable {
                     "INNER JOIN Cliente ce ON ce.ClienteID = c.ClienteID " +
                     "WHERE ce.ClienteID = ? AND s.DateShopping BETWEEN ? AND ?";
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, 1); // Reemplazar con el ID del cliente (ejemplo: 1)
+            statement.setInt(1, idClienteSeleccionado); // Reemplazar con el ID del cliente (ejemplo: 1)
             statement.setDate(2, Date.valueOf(fechaInicio));
             statement.setDate(3, Date.valueOf(fechaFin));
 
