@@ -1,63 +1,88 @@
 package org.example.bcn.Reportes;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class ReporteC {
-    private int id_Cliente;
-    private String nombre;
-    private String apellido;
-    private int id_Card;
-    private String NumeroCuentaCensurado;
+    private final SimpleIntegerProperty clienteID;
+    private final SimpleStringProperty nombre;
+    private final SimpleStringProperty apellido;
+    private final ObservableList<String> tarjetasCredito;
+    private final ObservableList<String> tarjetasDebito;
 
-    public ReporteC(int id_Cliente, String nombre, String apellido, int id_Card, String numeroCuentaCensurado) {
-        this.id_Cliente = id_Cliente;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.id_Card = id_Card;
-        NumeroCuentaCensurado = numeroCuentaCensurado;
+    public ReporteC(int clienteID, String nombre, String apellido) {
+        this.clienteID = new SimpleIntegerProperty(clienteID);
+        this.nombre = new SimpleStringProperty(nombre);
+        this.apellido = new SimpleStringProperty(apellido);
+        this.tarjetasCredito = FXCollections.observableArrayList();
+        this.tarjetasDebito = FXCollections.observableArrayList();
     }
 
-    public int getId_Cliente() {
-        return id_Cliente;
+    public int getClienteID() {
+        return clienteID.get();
     }
 
-    public void setId_Cliente(int id_Cliente) {
-        this.id_Cliente = id_Cliente;
+    public SimpleIntegerProperty clienteIDProperty() {
+        return clienteID;
     }
 
     public String getNombre() {
+        return nombre.get();
+    }
+
+    public SimpleStringProperty nombreProperty() {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public String getApellido() {
+        return apellido.get();
     }
 
-    public String getApellido() {
+    public SimpleStringProperty apellidoProperty() {
         return apellido;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    public ObservableList<String> getTarjetasCredito() {
+        return tarjetasCredito;
     }
 
-    public int getId_Card() {
-        return id_Card;
+    public ObservableList<String> getTarjetasDebito() {
+        return tarjetasDebito;
     }
 
-    public void setId_Card(int id_Card) {
-        this.id_Card = id_Card;
-    }
-
-    public String getNumeroCuentaCensurado() {
-        String numeroCuenta;
-        numeroCuenta = NumeroCuentaCensurado;
-
-        if (numeroCuenta.length() < 16) {
-            return "XXXX XXXX XXXX XXXX";
+    public void agregarTarjeta(String numeroTarjeta, String tipoTarjeta) {
+        if ("Tarjeta Credito".equalsIgnoreCase(tipoTarjeta)) {
+            tarjetasCredito.add(numeroTarjeta);
+        } else if ("Tarjeta Debito".equalsIgnoreCase(tipoTarjeta)) {
+            tarjetasDebito.add(numeroTarjeta);
         }
-        return "XXXX XXXX XXXX " + numeroCuenta.substring(numeroCuenta.length() - 4);
     }
 
-    public void setNumeroCuentaCensurado(String numeroCuentaCensurado) {
-        NumeroCuentaCensurado = numeroCuentaCensurado;
+    public String tarjetasProperty() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Tarjetas de crédito:\n");
+        if (!tarjetasCredito.isEmpty()) {
+            for (String tarjeta : tarjetasCredito) {
+                sb.append("XXXX XXXX XXXX ").append(tarjeta.substring(tarjeta.length() - 4)).append("\n");
+            }
+        } else {
+            sb.append("N/A \n");
+        }
+
+        sb.append("Tarjetas de Débito:\n");
+        if (!tarjetasDebito.isEmpty()) {
+            for (String tarjeta : tarjetasDebito) {
+                sb.append("XXXX XXXX XXXX ").append(tarjeta.substring(tarjeta.length() - 4)).append("\n");
+            }
+        } else {
+            sb.append("N/A \n");
+        }
+
+        return sb.toString();
     }
+
+
+
 }
